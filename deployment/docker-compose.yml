@@ -1,0 +1,50 @@
+services:
+  hindsight-postgres:
+    image: pgvector/pgvector:pg18
+    container_name: hindsight-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - hindsight_postgres_data:/var/lib/postgresql/18/docker
+    networks:
+      - hindsight-net
+
+  hindsight-minimal:
+    image: chenzai666/hindsight-zh-control-plane:latest
+    container_name: hindsight-minimal
+    restart: unless-stopped
+    depends_on:
+      - hindsight-postgres
+    ports:
+      - "8888:8888"
+      - "9999:9999"
+    environment:
+      HINDSIGHT_API_PORT: "8888"
+      HINDSIGHT_ENABLE_API: "true"
+      HINDSIGHT_ENABLE_CP: "true"
+      HINDSIGHT_API_HOST: "0.0.0.0"
+      HINDSIGHT_CP_DATAPLANE_API_URL: "http://localhost:8888"
+      HINDSIGHT_API_DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@hindsight-postgres:5432/${POSTGRES_DB}
+      HINDSIGHT_API_LLM_PROVIDER: ${HINDSIGHT_API_LLM_PROVIDER}
+      HINDSIGHT_API_LLM_BASE_URL: ${HINDSIGHT_API_LLM_BASE_URL}
+      HINDSIGHT_API_LLM_API_KEY: ${HINDSIGHT_API_LLM_API_KEY}
+      HINDSIGHT_API_LOG_LEVEL: ${HINDSIGHT_API_LOG_LEVEL}
+      NODE_ENV: production
+      PYTHONUNBUFFERED: "1"
+      TRANSFORMERS_VERBOSITY: error
+      HF_HUB_VERBOSITY: error
+      HF_HUB_DOWNLOAD_TIMEOUT: "600"
+      TOKENIZERS_PARALLELISM: "false"
+    networks:
+      - hindsight-net
+
+networks:
+  hindsight-net:
+    name: hindsight-net
+
+volumes:
+  hindsight_postgres_data:
+    name: hindsight_postgres_data

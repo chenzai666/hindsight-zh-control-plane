@@ -1,0 +1,49 @@
+# deployment
+
+This directory contains a **directly usable** Docker Compose deployment template for the Chinese Hindsight image layer.
+
+## Files
+
+- `docker-compose.yml` — deploys:
+  - `hindsight-postgres`
+  - `hindsight-minimal`
+- `.env.example` — environment variable template
+
+## Quick start
+
+```bash
+cd deployment
+cp .env.example .env
+# edit .env with your real secrets
+
+docker compose up -d
+```
+
+## What this template assumes
+
+- Hindsight image: `chenzai666/hindsight-zh-control-plane:latest`
+- PostgreSQL image: `pgvector/pgvector:pg18`
+- Network: `hindsight-net`
+- Ports:
+  - `8888` for API
+  - `9999` for control-plane
+
+## Post-deploy verification
+
+```bash
+docker compose ps
+docker logs hindsight-minimal --tail 200
+curl http://127.0.0.1:9999/
+```
+
+Check for these startup signals in logs:
+
+- `Application startup complete.`
+- `Uvicorn running on http://0.0.0.0:8888`
+- `✅ Hindsight is running!`
+
+## Notes
+
+- This template is derived from the currently verified live runtime shape.
+- It is meant to replace future ad-hoc reconstruction from `docker inspect`.
+- Secrets are intentionally externalized into `.env`.
