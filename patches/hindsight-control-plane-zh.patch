@@ -1,0 +1,3074 @@
+diff --git a/hindsight-control-plane/src/app/banks/[bankId]/page.tsx b/hindsight-control-plane/src/app/banks/[bankId]/page.tsx
+index f699d6b..1b57ae7 100644
+--- a/hindsight-control-plane/src/app/banks/[bankId]/page.tsx
++++ b/hindsight-control-plane/src/app/banks/[bankId]/page.tsx
+@@ -202,9 +202,7 @@ export default function BankPage() {
+                       <DropdownMenuItem
+                         onClick={handleTriggerConsolidation}
+                         disabled={isConsolidating || !observationsEnabled}
+-                        title={
+-                          !observationsEnabled ? "未启用观察功能" : undefined
+-                        }
++                        title={!observationsEnabled ? "未启用观察功能" : undefined}
+                       >
+                         {isConsolidating ? (
+                           <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+@@ -219,9 +217,7 @@ export default function BankPage() {
+                       <DropdownMenuItem
+                         onClick={handleRecoverConsolidation}
+                         disabled={isRecoveringConsolidation || !observationsEnabled}
+-                        title={
+-                          !observationsEnabled ? "未启用观察功能" : undefined
+-                        }
++                        title={!observationsEnabled ? "未启用观察功能" : undefined}
+                       >
+                         {isRecoveringConsolidation ? (
+                           <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+@@ -237,9 +233,7 @@ export default function BankPage() {
+                         onClick={() => setShowClearObservationsDialog(true)}
+                         disabled={!observationsEnabled}
+                         className="text-amber-600 dark:text-amber-400 focus:text-amber-700 dark:focus:text-amber-300"
+-                        title={
+-                          !observationsEnabled ? "未启用观察功能" : undefined
+-                        }
++                        title={!observationsEnabled ? "未启用观察功能" : undefined}
+                       >
+                         <Trash2 className="w-4 h-4 mr-2" />
+                         清空观察
+@@ -375,7 +369,9 @@ export default function BankPage() {
+             {view === "recall" && (
+               <div>
+                 <h1 className="text-3xl font-bold mb-2 text-foreground">回忆</h1>
+-                <p className="text-muted-foreground mb-6">使用详细追踪信息和检索方法分析记忆召回。</p>
++                <p className="text-muted-foreground mb-6">
++                  使用详细追踪信息和检索方法分析记忆召回。
++                </p>
+                 <SearchDebugView />
+               </div>
+             )}
+@@ -395,7 +391,9 @@ export default function BankPage() {
+             {view === "data" && (
+               <div>
+                 <h1 className="text-3xl font-bold mb-2 text-foreground">记忆</h1>
+-                <p className="text-muted-foreground mb-6">查看并探索此记忆库中存储的不同类型记忆。</p>
++                <p className="text-muted-foreground mb-6">
++                  查看并探索此记忆库中存储的不同类型记忆。
++                </p>
+ 
+                 <div className="mb-6 border-b border-border">
+                   <div className="flex gap-1">
+@@ -540,7 +538,9 @@ export default function BankPage() {
+             {view === "entities" && (
+               <div>
+                 <h1 className="text-3xl font-bold mb-2 text-foreground">实体</h1>
+-                <p className="text-muted-foreground mb-6">浏览记忆中提及的实体（人物、组织、地点等）。</p>
++                <p className="text-muted-foreground mb-6">
++                  浏览记忆中提及的实体（人物、组织、地点等）。
++                </p>
+                 <EntitiesView />
+               </div>
+             )}
+@@ -556,8 +556,8 @@ export default function BankPage() {
+             <AlertDialogDescription asChild>
+               <div className="space-y-2 text-sm text-muted-foreground">
+                 <p>
+-                  确定要删除记忆库{" "}
+-                  <span className="font-semibold text-foreground">{bankId}</span> 吗？
++                  确定要删除记忆库 <span className="font-semibold text-foreground">{bankId}</span>{" "}
++                  吗？
+                 </p>
+                 <p className="text-red-600 dark:text-red-400 font-medium">
+                   此操作无法撤销。所有记忆、实体、文档和记忆库画像都将被永久删除。
+@@ -596,8 +596,8 @@ export default function BankPage() {
+             <AlertDialogDescription asChild>
+               <div className="space-y-2 text-sm text-muted-foreground">
+                 <p>
+-                  确定要重置{" "}
+-                  <span className="font-semibold text-foreground">{bankId}</span> 的所有配置覆盖吗？
++                  确定要重置 <span className="font-semibold text-foreground">{bankId}</span>{" "}
++                  的所有配置覆盖吗？
+                 </p>
+                 <p className="text-amber-600 dark:text-amber-400 font-medium">
+                   所有记忆库级设置（retain、observations、reflect）都将恢复为服务器默认值。此操作不会影响记忆、实体或记忆库画像。
+@@ -632,8 +632,8 @@ export default function BankPage() {
+             <AlertDialogDescription asChild>
+               <div className="space-y-2 text-sm text-muted-foreground">
+                 <p>
+-                  确定要清空{" "}
+-                  <span className="font-semibold text-foreground">{bankId}</span> 的所有观察吗？
++                  确定要清空 <span className="font-semibold text-foreground">{bankId}</span>{" "}
++                  的所有观察吗？
+                 </p>
+                 <p className="text-amber-600 dark:text-amber-400 font-medium">
+                   这将删除所有已整合知识。下次执行整合时会重新生成观察。
+diff --git a/hindsight-control-plane/src/app/dashboard/page.tsx b/hindsight-control-plane/src/app/dashboard/page.tsx
+index e80deca..90f7485 100644
+--- a/hindsight-control-plane/src/app/dashboard/page.tsx
++++ b/hindsight-control-plane/src/app/dashboard/page.tsx
+@@ -25,9 +25,7 @@ export default function DashboardPage() {
+         <div className="flex items-center justify-center h-[calc(100vh-80px)] bg-muted/20">
+           <div className="text-center p-10 bg-card rounded-lg border-2 border-border shadow-lg max-w-md">
+             <h3 className="text-2xl font-bold mb-3 text-card-foreground">欢迎使用 Hindsight</h3>
+-            <p className="text-muted-foreground">
+-              请从上方下拉菜单选择一个记忆库开始使用。
+-            </p>
++            <p className="text-muted-foreground">请从上方下拉菜单选择一个记忆库开始使用。</p>
+           </div>
+         </div>
+       </div>
+diff --git a/hindsight-control-plane/src/components/audit-logs-view.tsx b/hindsight-control-plane/src/components/audit-logs-view.tsx
+index cf12789..322ddd4 100644
+--- a/hindsight-control-plane/src/components/audit-logs-view.tsx
++++ b/hindsight-control-plane/src/components/audit-logs-view.tsx
+@@ -33,28 +33,28 @@ const ACTION_OPTIONS = [
+   { value: "update_bank", label: "更新记忆库" },
+   { value: "delete_bank", label: "删除记忆库" },
+   { value: "clear_memories", label: "清空记忆" },
+-  { value: "consolidation", label: "Consolidation" },
+-  { value: "batch_retain", label: "Batch 写入记忆" },
+-  { value: "create_mental_model", label: "Create Mental Model" },
+-  { value: "refresh_mental_model", label: "Refresh Mental Model" },
+-  { value: "delete_mental_model", label: "Delete Mental Model" },
+-  { value: "create_directive", label: "Create Directive" },
+-  { value: "delete_directive", label: "Delete Directive" },
+-  { value: "file_convert_retain", label: "File Convert & 写入记忆" },
+-  { value: "webhook_delivery", label: "Webhook Delivery" },
++  { value: "consolidation", label: "整合" },
++  { value: "batch_retain", label: "批量写入记忆" },
++  { value: "create_mental_model", label: "创建心智模型" },
++  { value: "refresh_mental_model", label: "刷新心智模型" },
++  { value: "delete_mental_model", label: "删除心智模型" },
++  { value: "create_directive", label: "创建指令" },
++  { value: "delete_directive", label: "删除指令" },
++  { value: "file_convert_retain", label: "文件转换并写入记忆" },
++  { value: "webhook_delivery", label: "Webhook 投递" },
+ ];
+ 
+ const TRANSPORT_OPTIONS = [
+-  { value: "all", label: "All transports" },
++  { value: "all", label: "全部传输方式" },
+   { value: "http", label: "HTTP" },
+   { value: "mcp", label: "MCP" },
+-  { value: "system", label: "System" },
++  { value: "system", label: "系统" },
+ ];
+ 
+ const PERIOD_OPTIONS = [
+-  { value: "1d", label: "Today" },
+-  { value: "7d", label: "Last 7 days" },
+-  { value: "30d", label: "Last 30 days" },
++  { value: "1d", label: "今天" },
++  { value: "7d", label: "最近 7 天" },
++  { value: "30d", label: "最近 30 天" },
+ ];
+ 
+ function formatDuration(startedAt: string | null, endedAt: string | null): string {
+@@ -143,7 +143,7 @@ function AuditChart({ bankId }: { bankId: string }) {
+   return (
+     <Card>
+       <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0 gap-3">
+-        <CardTitle className="text-sm font-semibold">Request Volume</CardTitle>
++        <CardTitle className="text-sm font-semibold">请求量</CardTitle>
+         <div className="flex gap-2">
+           <Select
+             value={chartAction || "all"}
+@@ -184,11 +184,11 @@ function AuditChart({ bankId }: { bankId: string }) {
+         <div className="h-[120px]">
+           {loading ? (
+             <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+-              Loading...
++              加载中...
+             </div>
+           ) : chartData.length === 0 ? (
+             <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+-              No data for this period
++              该时间段暂无数据
+             </div>
+           ) : (
+             <ResponsiveContainer width="100%" height="100%">
+@@ -346,7 +346,7 @@ export function AuditLogsView() {
+ 
+         <Select value={transportFilter || "all"} onValueChange={handleTransportFilterChange}>
+           <SelectTrigger className="w-[160px]">
+-            <SelectValue placeholder="All transports" />
++            <SelectValue placeholder="全部传输方式" />
+           </SelectTrigger>
+           <SelectContent position="popper" className="max-h-[300px] overflow-y-auto">
+             {TRANSPORT_OPTIONS.map((opt) => (
+@@ -362,11 +362,11 @@ export function AuditLogsView() {
+             <SelectValue />
+           </SelectTrigger>
+           <SelectContent position="popper">
+-            <SelectItem value="all">All time</SelectItem>
+-            <SelectItem value="1h">Last hour</SelectItem>
+-            <SelectItem value="1d">Last 24 hours</SelectItem>
+-            <SelectItem value="7d">Last 7 days</SelectItem>
+-            <SelectItem value="30d">Last 30 days</SelectItem>
++            <SelectItem value="all">全部时间</SelectItem>
++            <SelectItem value="1h">最近 1 小时</SelectItem>
++            <SelectItem value="1d">最近 24 小时</SelectItem>
++            <SelectItem value="7d">最近 7 天</SelectItem>
++            <SelectItem value="30d">最近 30 天</SelectItem>
+           </SelectContent>
+         </Select>
+ 
+@@ -377,11 +377,11 @@ export function AuditLogsView() {
+           disabled={loading}
+         >
+           <RefreshCw className={`w-4 h-4 mr-1 ${loading ? "animate-spin" : ""}`} />
+-          Refresh
++          刷新
+         </Button>
+ 
+         <span className="text-sm text-muted-foreground ml-auto">
+-          {total} {total === 1 ? "entry" : "entries"}
++          共 {total} 条记录
+         </span>
+       </div>
+ 
+@@ -389,17 +389,17 @@ export function AuditLogsView() {
+       <Table>
+         <TableHeader>
+           <TableRow>
+-            <TableHead className="w-[200px]">Time</TableHead>
+-            <TableHead>Action</TableHead>
+-            <TableHead className="w-[100px]">Transport</TableHead>
+-            <TableHead className="w-[100px]">Duration</TableHead>
++            <TableHead className="w-[200px]">时间</TableHead>
++            <TableHead>操作</TableHead>
++            <TableHead className="w-[100px]">传输方式</TableHead>
++            <TableHead className="w-[100px]">耗时</TableHead>
+           </TableRow>
+         </TableHeader>
+         <TableBody>
+           {logs.length === 0 ? (
+             <TableRow>
+               <TableCell colSpan={4} className="text-center text-muted-foreground py-8">
+-                {loading ? "Loading..." : "No audit logs found"}
++                {loading ? "加载中..." : "未找到审计日志"}
+               </TableCell>
+             </TableRow>
+           ) : (
+@@ -429,7 +429,7 @@ export function AuditLogsView() {
+       {totalPages > 1 && (
+         <div className="flex items-center justify-between">
+           <span className="text-sm text-muted-foreground">
+-            Page {currentPage} of {totalPages}
++            第 {currentPage} / {totalPages} 页
+           </span>
+           <div className="flex gap-2">
+             <Button
+@@ -439,7 +439,7 @@ export function AuditLogsView() {
+               disabled={offset === 0}
+             >
+               <ChevronLeft className="w-4 h-4 mr-1" />
+-              Previous
++              上一页
+             </Button>
+             <Button
+               variant="outline"
+@@ -447,7 +447,7 @@ export function AuditLogsView() {
+               onClick={() => handlePageChange(offset + limit)}
+               disabled={offset + limit >= total}
+             >
+-              Next
++              下一页
+               <ChevronRight className="w-4 h-4 ml-1" />
+             </Button>
+           </div>
+@@ -458,25 +458,25 @@ export function AuditLogsView() {
+       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+           <DialogHeader>
+-            <DialogTitle>Audit Log: {selectedLog?.action}</DialogTitle>
++            <DialogTitle>审计日志： {selectedLog?.action}</DialogTitle>
+           </DialogHeader>
+           {selectedLog && (
+             <div className="space-y-4">
+               <div className="grid grid-cols-2 gap-4 text-sm">
+                 <div>
+-                  <span className="text-muted-foreground">Action:</span>{" "}
++                  <span className="text-muted-foreground">操作：</span>{" "}
+                   <span className="font-medium">{selectedLog.action}</span>
+                 </div>
+                 <div>
+-                  <span className="text-muted-foreground">Transport:</span>{" "}
++                  <span className="text-muted-foreground">传输方式：</span>{" "}
+                   <TransportBadge transport={selectedLog.transport} />
+                 </div>
+                 <div>
+-                  <span className="text-muted-foreground">Started:</span>{" "}
++                  <span className="text-muted-foreground">开始时间：</span>{" "}
+                   <span className="font-mono">{formatDateTime(selectedLog.started_at)}</span>
+                 </div>
+                 <div>
+-                  <span className="text-muted-foreground">Duration:</span>{" "}
++                  <span className="text-muted-foreground">耗时：</span>{" "}
+                   <span className="font-mono">
+                     {formatDuration(selectedLog.started_at, selectedLog.ended_at)}
+                   </span>
+@@ -485,7 +485,7 @@ export function AuditLogsView() {
+ 
+               {selectedLog.request && (
+                 <div>
+-                  <h4 className="text-sm font-semibold mb-2">Request</h4>
++                  <h4 className="text-sm font-semibold mb-2">请求</h4>
+                   <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto max-h-[200px] overflow-y-auto">
+                     {JSON.stringify(selectedLog.request, null, 2)}
+                   </pre>
+@@ -494,7 +494,7 @@ export function AuditLogsView() {
+ 
+               {selectedLog.response && (
+                 <div>
+-                  <h4 className="text-sm font-semibold mb-2">Response</h4>
++                  <h4 className="text-sm font-semibold mb-2">响应</h4>
+                   <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto max-h-[200px] overflow-y-auto">
+                     {JSON.stringify(selectedLog.response, null, 2)}
+                   </pre>
+@@ -503,7 +503,7 @@ export function AuditLogsView() {
+ 
+               {selectedLog.metadata && Object.keys(selectedLog.metadata).length > 0 && (
+                 <div>
+-                  <h4 className="text-sm font-semibold mb-2">Metadata</h4>
++                  <h4 className="text-sm font-semibold mb-2">元数据</h4>
+                   <pre className="bg-muted p-3 rounded-md text-xs overflow-x-auto">
+                     {JSON.stringify(selectedLog.metadata, null, 2)}
+                   </pre>
+diff --git a/hindsight-control-plane/src/components/bank-operations-view.tsx b/hindsight-control-plane/src/components/bank-operations-view.tsx
+index 9fcc3c7..46be142 100644
+--- a/hindsight-control-plane/src/components/bank-operations-view.tsx
++++ b/hindsight-control-plane/src/components/bank-operations-view.tsx
+@@ -95,7 +95,7 @@ const OPERATION_TYPE_OPTIONS = [
+   { value: "retain", label: "写入记忆" },
+   { value: "consolidation", label: "整合" },
+   { value: "refresh_mental_model", label: "心智模型刷新" },
+-  { value: "file_convert_retain", label: "File Convert & 写入记忆" },
++  { value: "file_convert_retain", label: "文件转换并写入记忆" },
+   { value: "webhook_delivery", label: "Webhook 投递" },
+ ];
+ 
+@@ -242,11 +242,11 @@ export function BankOperationsView() {
+       <div className="flex items-center justify-between">
+         <div>
+           <div className="flex items-center gap-2">
+-            <h3 className="text-lg font-semibold">Background Operations</h3>
++            <h3 className="text-lg font-semibold">后台操作</h3>
+             <button
+               onClick={() => loadOperations()}
+               className="p-1 rounded hover:bg-muted transition-colors"
+-              title="Refresh operations"
++              title="刷新操作"
+               disabled={loading}
+             >
+               <RefreshCw
+@@ -255,7 +255,7 @@ export function BankOperationsView() {
+             </button>
+           </div>
+           <p className="text-sm text-muted-foreground">
+-            {totalOperations} operation{totalOperations !== 1 ? "s" : ""}
++            共 {totalOperations} 个操作
+             {statusFilter ? ` (${statusFilter})` : ""}
+           </p>
+         </div>
+@@ -282,12 +282,12 @@ export function BankOperationsView() {
+           </Select>
+           <div className="flex gap-1 bg-muted p-1 rounded-lg">
+             {[
+-              { value: null, label: "All" },
+-              { value: "pending", label: "Pending" },
+-              { value: "processing", label: "Processing" },
+-              { value: "completed", label: "Completed" },
+-              { value: "failed", label: "Failed" },
+-              { value: "cancelled", label: "Cancelled" },
++              { value: null, label: "全部" },
++              { value: "pending", label: "待处理" },
++              { value: "processing", label: "处理中" },
++              { value: "completed", label: "已完成" },
++              { value: "failed", label: "失败" },
++              { value: "cancelled", label: "已取消" },
+             ].map((filter) => (
+               <button
+                 key={filter.value ?? "all"}
+@@ -312,9 +312,9 @@ export function BankOperationsView() {
+                 <TableHeader>
+                   <TableRow>
+                     <TableHead className="w-[100px]">ID</TableHead>
+-                    <TableHead>Type</TableHead>
+-                    <TableHead>Created</TableHead>
+-                    <TableHead>Status</TableHead>
++                    <TableHead>类型</TableHead>
++                    <TableHead>创建时间</TableHead>
++                    <TableHead>状态</TableHead>
+                     <TableHead className="w-[80px]"></TableHead>
+                   </TableRow>
+                 </TableHeader>
+@@ -336,13 +336,13 @@ export function BankOperationsView() {
+                         {op.status === "pending" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                             <Clock className="w-3 h-3" />
+-                            pending
++                            待处理
+                           </span>
+                         )}
+                         {op.status === "processing" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                             <Loader2 className="w-3 h-3 animate-spin" />
+-                            processing
++                            处理中
+                           </span>
+                         )}
+                         {op.status === "failed" && (
+@@ -351,19 +351,19 @@ export function BankOperationsView() {
+                             title={op.error_message ?? undefined}
+                           >
+                             <AlertCircle className="w-3 h-3" />
+-                            failed
++                            失败
+                           </span>
+                         )}
+                         {op.status === "completed" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                             <CheckCircle className="w-3 h-3" />
+-                            completed
++                            已完成
+                           </span>
+                         )}
+                         {op.status === "cancelled" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-500/10 text-gray-600 dark:text-gray-400 border border-gray-500/20">
+                             <Ban className="w-3 h-3" />
+-                            cancelled
++                            已取消
+                           </span>
+                         )}
+                       </TableCell>
+@@ -384,7 +384,7 @@ export function BankOperationsView() {
+                             ) : (
+                               <X className="w-3 h-3 mr-1" />
+                             )}
+-                            {cancellingOpId === op.id ? "" : "Cancel"}
++                            {cancellingOpId === op.id ? "" : "取消"}
+                           </Button>
+                         )}
+                         {(op.status === "failed" || op.status === "cancelled") && (
+@@ -403,7 +403,7 @@ export function BankOperationsView() {
+                             ) : (
+                               <RotateCcw className="w-3 h-3 mr-1" />
+                             )}
+-                            {retryingOpId === op.id ? "" : "Retry"}
++                            {retryingOpId === op.id ? "" : "重试"}
+                           </Button>
+                         )}
+                       </TableCell>
+@@ -416,8 +416,7 @@ export function BankOperationsView() {
+             {totalOperations > limit && (
+               <div className="flex items-center justify-between mt-4 pt-4 border-t">
+                 <p className="text-sm text-muted-foreground">
+-                  Showing {offset + 1}-{Math.min(offset + limit, totalOperations)} of{" "}
+-                  {totalOperations}
++                  显示第 {offset + 1}-{Math.min(offset + limit, totalOperations)} 条，共 {totalOperations} 条
+                 </p>
+                 <div className="flex gap-2">
+                   <Button
+@@ -426,7 +425,7 @@ export function BankOperationsView() {
+                     onClick={() => handlePageChange(Math.max(0, offset - limit))}
+                     disabled={offset === 0}
+                   >
+-                    Previous
++                    上一页
+                   </Button>
+                   <Button
+                     variant="outline"
+@@ -434,7 +433,7 @@ export function BankOperationsView() {
+                     onClick={() => handlePageChange(offset + limit)}
+                     disabled={offset + limit >= totalOperations}
+                   >
+-                    Next
++                    下一页
+                   </Button>
+                 </div>
+               </div>
+@@ -442,16 +441,16 @@ export function BankOperationsView() {
+           </>
+         ) : (
+           <p className="text-muted-foreground text-center py-8 text-sm">
+-            No {statusFilter ? `${statusFilter} ` : ""}operations
++            暂无{statusFilter ? `${statusFilter}状态的` : ""}操作
+           </p>
+         )}
+       </div>
+ 
+-      {/* Operation Details Dialog */}
++      {/* 操作详情 Dialog */}
+       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+         <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+           <DialogHeader>
+-            <DialogTitle>Operation Details</DialogTitle>
++            <DialogTitle>操作详情</DialogTitle>
+             <DialogDescription>
+               {selectedOperation?.operation_id && (
+                 <span className="font-mono text-xs">{selectedOperation.operation_id}</span>
+@@ -471,65 +470,65 @@ export function BankOperationsView() {
+                   {/* Basic Info */}
+                   <div className="grid grid-cols-2 gap-4">
+                     <div>
+-                      <div className="text-sm font-medium text-muted-foreground">Status</div>
++                      <div className="text-sm font-medium text-muted-foreground">状态</div>
+                       <div className="mt-1">
+                         {selectedOperation.status === "pending" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                             <Clock className="w-3 h-3" />
+-                            pending
++                            待处理
+                           </span>
+                         )}
+                         {selectedOperation.status === "processing" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                             <Loader2 className="w-3 h-3 animate-spin" />
+-                            processing
++                            处理中
+                           </span>
+                         )}
+                         {selectedOperation.status === "failed" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
+                             <AlertCircle className="w-3 h-3" />
+-                            failed
++                            失败
+                           </span>
+                         )}
+                         {selectedOperation.status === "completed" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                             <CheckCircle className="w-3 h-3" />
+-                            completed
++                            已完成
+                           </span>
+                         )}
+                         {selectedOperation.status === "cancelled" && (
+                           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-500/10 text-gray-600 dark:text-gray-400 border border-gray-500/20">
+                             <Ban className="w-3 h-3" />
+-                            cancelled
++                            已取消
+                           </span>
+                         )}
+                       </div>
+                     </div>
+                     <div>
+-                      <div className="text-sm font-medium text-muted-foreground">Type</div>
++                      <div className="text-sm font-medium text-muted-foreground">类型</div>
+                       <div className="mt-1 font-mono text-sm">
+                         {selectedOperation.operation_type}
+                       </div>
+                     </div>
+                     <div>
+-                      <div className="text-sm font-medium text-muted-foreground">Created</div>
++                      <div className="text-sm font-medium text-muted-foreground">创建时间</div>
+                       <div className="mt-1 text-sm">
+                         {selectedOperation.created_at
+                           ? new Date(selectedOperation.created_at).toLocaleString()
+-                          : "N/A"}
++                          : "无"}
+                       </div>
+                     </div>
+                     <div>
+-                      <div className="text-sm font-medium text-muted-foreground">Updated</div>
++                      <div className="text-sm font-medium text-muted-foreground">更新时间</div>
+                       <div className="mt-1 text-sm">
+                         {selectedOperation.updated_at
+                           ? new Date(selectedOperation.updated_at).toLocaleString()
+-                          : "N/A"}
++                          : "无"}
+                       </div>
+                     </div>
+                     {selectedOperation.completed_at && (
+                       <div>
+-                        <div className="text-sm font-medium text-muted-foreground">Completed</div>
++                        <div className="text-sm font-medium text-muted-foreground">完成时间</div>
+                         <div className="mt-1 text-sm">
+                           {new Date(selectedOperation.completed_at).toLocaleString()}
+                         </div>
+@@ -537,7 +536,7 @@ export function BankOperationsView() {
+                     )}
+                     {selectedOperation.result_metadata?.items_count !== undefined && (
+                       <div>
+-                        <div className="text-sm font-medium text-muted-foreground">Total Items</div>
++                        <div className="text-sm font-medium text-muted-foreground">总条目数</div>
+                         <div className="mt-1 text-sm">
+                           {selectedOperation.result_metadata.items_count}
+                         </div>
+@@ -586,12 +585,12 @@ export function BankOperationsView() {
+                     </div>
+                   )}
+ 
+-                  {/* Metadata */}
++                  {/* 元数据 */}
+                   {selectedOperation.result_metadata &&
+                     Object.keys(selectedOperation.result_metadata).length > 0 && (
+                       <div>
+                         <div className="text-sm font-medium text-muted-foreground mb-2">
+-                          Metadata
++                          元数据
+                         </div>
+                         <pre className="rounded-lg border bg-muted/30 p-3 text-xs font-mono overflow-x-auto max-h-96 whitespace-pre-wrap break-words">
+                           {JSON.stringify(selectedOperation.result_metadata, null, 2)}
+@@ -616,7 +615,7 @@ export function BankOperationsView() {
+                     selectedOperation.child_operations.length > 0 && (
+                       <div>
+                         <div className="text-sm font-medium text-muted-foreground mb-2">
+-                          Sub-batches (
++                          子批次（
+                           {selectedOperation.result_metadata?.num_sub_batches ||
+                             selectedOperation.child_operations.length}
+                           )
+@@ -624,10 +623,10 @@ export function BankOperationsView() {
+                         <Table>
+                           <TableHeader>
+                             <TableRow>
+-                              <TableHead className="w-[60px]">Index</TableHead>
++                              <TableHead className="w-[60px]">序号</TableHead>
+                               <TableHead className="w-[100px]">ID</TableHead>
+-                              <TableHead className="w-[80px]">Items</TableHead>
+-                              <TableHead>Status</TableHead>
++                              <TableHead className="w-[80px]">条目数</TableHead>
++                              <TableHead>状态</TableHead>
+                             </TableRow>
+                           </TableHeader>
+                           <TableBody>
+@@ -680,7 +679,7 @@ export function BankOperationsView() {
+                       </div>
+                     )}
+ 
+-                  {/* Raw payload */}
++                  {/* 原始载荷 */}
+                   {(() => {
+                     const loadedThisOp = payloadLoadedFor === selectedOperation.operation_id;
+                     const hasPayload = !!selectedOperation.task_payload;
+@@ -689,7 +688,7 @@ export function BankOperationsView() {
+                       <div>
+                         <div className="flex items-center justify-between mb-2">
+                           <div className="text-sm font-medium text-muted-foreground">
+-                            Raw payload
++                            原始载荷
+                           </div>
+                           {!loadedThisOp && (
+                             <Button
+@@ -704,7 +703,7 @@ export function BankOperationsView() {
+                               ) : (
+                                 <Code className="w-3 h-3 mr-1" />
+                               )}
+-                              Load raw
++                              加载原始载荷
+                             </Button>
+                           )}
+                         </div>
+@@ -715,13 +714,12 @@ export function BankOperationsView() {
+                         ) : loadedThisOp ? (
+                           <p className="text-xs text-muted-foreground">
+                             {isParent
+-                              ? "This is a parent operation — the raw payload is stored on each sub-batch. Open a child operation to inspect its payload."
+-                              : "No raw payload stored for this operation."}
++                              ? "这是父级操作——原始载荷存储在各子批次上。请打开某个子操作查看其载荷。"
++                              : "该操作未存储原始载荷。"}
+                           </p>
+                         ) : (
+                           <p className="text-xs text-muted-foreground">
+-                            Shows the full parameters the operation was submitted with (may be
+-                            large).
++                            显示该操作提交时的完整参数（内容可能较大）。
+                           </p>
+                         )}
+                       </div>
+diff --git a/hindsight-control-plane/src/components/bank-selector.tsx b/hindsight-control-plane/src/components/bank-selector.tsx
+index d2a2a25..4dd3434 100644
+--- a/hindsight-control-plane/src/components/bank-selector.tsx
++++ b/hindsight-control-plane/src/components/bank-selector.tsx
+@@ -62,7 +62,7 @@ function formatCompact(n: number): string {
+   return n.toString();
+ }
+ 
+-// Pads date-only Event Date input ("YYYY-MM-DD") with midnight so the API never sees an ambiguous value.
++// Pads date-only 事件日期 input ("YYYY-MM-DD") with midnight so the API never sees an ambiguous value.
+ function toIsoTimestamp(value: string): string {
+   return value.includes("T") ? value : `${value}T00:00:00`;
+ }
+@@ -70,7 +70,7 @@ function toIsoTimestamp(value: string): string {
+ function formatTimeAgo(isoDate: string): string {
+   const diff = Date.now() - new Date(isoDate).getTime();
+   const seconds = Math.floor(diff / 1000);
+-  if (seconds < 60) return "just now";
++  if (seconds < 60) return "刚刚";
+   const minutes = Math.floor(seconds / 60);
+   if (minutes < 60) return `${minutes}m ago`;
+   const hours = Math.floor(minutes / 60);
+@@ -89,33 +89,33 @@ function BankSelectorInner() {
+   const { theme, toggleTheme } = useTheme();
+   const { features } = useFeatures();
+   const [open, setOpen] = React.useState(false);
+-  const [createDialogOpen, setCreateDialogOpen] = React.useState(false);
++  const [createDialogOpen, set创建DialogOpen] = React.useState(false);
+   const [newBankId, setNewBankId] = React.useState("");
+   const [isCreating, setIsCreating] = React.useState(false);
+-  const [createError, setCreateError] = React.useState<string | null>(null);
++  const [createError, set创建Error] = React.useState<string | null>(null);
+   const [useTemplate, setUseTemplate] = React.useState(false);
+   const [templateJson, setTemplateJson] = React.useState("");
+   const [templateError, setTemplateError] = React.useState<string | null>(null);
+ 
+-  // Document creation state
++  // 文档 creation state
+   const [docDialogOpen, setDocDialogOpen] = React.useState(false);
+   const [docTab, setDocTab] = React.useState<"text" | "upload">("text");
+   const [docContent, setDocContent] = React.useState("");
+   const [docContext, setDocContext] = React.useState("");
+   const [docEventDate, setDocEventDate] = React.useState("");
+-  const [docDocumentId, setDocDocumentId] = React.useState("");
++  const [doc文档Id, setDoc文档Id] = React.useState("");
+   const [docTags, setDocTags] = React.useState("");
+   const [docObservationScopes, setDocObservationScopes] = React.useState<
+     "per_tag" | "combined" | "all_combinations" | "custom"
+   >("combined");
+-  const [docObservationScopesCustom, setDocObservationScopesCustom] = React.useState("");
++  const [docObservationScopes自定义, setDocObservationScopes自定义] = React.useState("");
+   const [docMetadata, setDocMetadata] = React.useState("");
+-  const [docEntities, setDocEntities] = React.useState("");
++  const [doc实体, setDoc实体] = React.useState("");
+   const [docAdvancedTab, setDocAdvancedTab] = React.useState<"document" | "tags" | "source">(
+     "document"
+   );
+   const [docAsync, setDocAsync] = React.useState(false);
+-  const [docStrategy, setDocStrategy] = React.useState("");
++  const [doc策略, setDoc策略] = React.useState("");
+   const [isCreatingDoc, setIsCreatingDoc] = React.useState(false);
+ 
+   // Available strategies for the current bank
+@@ -177,15 +177,15 @@ function BankSelectorInner() {
+     [sortedBanks]
+   );
+ 
+-  const handleCreateBank = async () => {
++  const handle创建Bank = async () => {
+     if (!newBankId.trim()) return;
+ 
+     setIsCreating(true);
+-    setCreateError(null);
++    set创建Error(null);
+     setTemplateError(null);
+ 
+     try {
+-      // Create the bank first
++      // 创建 the bank first
+       await client.createBank(newBankId.trim());
+ 
+       // If template JSON is provided, import it
+@@ -194,7 +194,7 @@ function BankSelectorInner() {
+         try {
+           manifest = JSON.parse(templateJson.trim());
+         } catch {
+-          setTemplateError("Invalid JSON. Please check the template syntax.");
++          setTemplateError("JSON 无效，请检查模板语法。");
+           setIsCreating(false);
+           return;
+         }
+@@ -203,7 +203,7 @@ function BankSelectorInner() {
+           await client.importBankTemplate(newBankId.trim(), manifest);
+         } catch (importError) {
+           setTemplateError(
+-            importError instanceof Error ? importError.message : "Failed to import template"
++            importError instanceof Error ? importError.message : "导入模板失败"
+           );
+           setIsCreating(false);
+           return;
+@@ -211,7 +211,7 @@ function BankSelectorInner() {
+       }
+ 
+       await loadBanks();
+-      setCreateDialogOpen(false);
++      set创建DialogOpen(false);
+       setNewBankId("");
+       setTemplateJson("");
+       setTemplateError(null);
+@@ -219,7 +219,7 @@ function BankSelectorInner() {
+       setCurrentBank(newBankId.trim());
+       router.push(bankRoute(newBankId.trim(), "?view=data"));
+     } catch (error) {
+-      setCreateError(error instanceof Error ? error.message : "Failed to create bank");
++      set创建Error(error instanceof Error ? error.message : "创建记忆库失败");
+     } finally {
+       setIsCreating(false);
+     }
+@@ -238,7 +238,7 @@ function BankSelectorInner() {
+     return Object.keys(result).length > 0 ? result : undefined;
+   };
+ 
+-  const parseEntities = (s: string) => {
++  const parse实体 = (s: string) => {
+     const items = s
+       .split(",")
+       .map((t) => t.trim())
+@@ -250,9 +250,9 @@ function BankSelectorInner() {
+   const scopeLabel = (tags: string[]) => tags.join(", ");
+ 
+   const scopeQuestion = (tags: string[]): string => {
+-    if (tags.length === 1) return `What happened with ${tags[0]}?`;
++    if (tags.length === 1) return `${tags[0]} 发生了什么？`;
+     const allButLast = tags.slice(0, -1).join(", ");
+-    return `What happened with ${allButLast} and ${tags[tags.length - 1]}?`;
++    return `${allButLast} 和 ${tags[tags.length - 1]} 发生了什么？`;
+   };
+ 
+   const computeScopes = (
+@@ -330,7 +330,7 @@ function BankSelectorInner() {
+     setUploadProgress("");
+ 
+     try {
+-      setUploadProgress(`Uploading ${selectedFiles.length} file(s)...`);
++      setUploadProgress(`正在上传 ${selectedFiles.length} 个文件...`);
+ 
+       const perFileMeta = filesMetadata.map((meta) => ({
+         ...(meta.context && { context: meta.context }),
+@@ -371,7 +371,7 @@ function BankSelectorInner() {
+     }
+   };
+ 
+-  const handleCreateDocument = async () => {
++  const handle创建文档 = async () => {
+     if (!currentBank || !docContent.trim()) return;
+ 
+     setIsCreatingDoc(true);
+@@ -395,7 +395,7 @@ function BankSelectorInner() {
+       } = { content: docContent };
+       if (docContext) item.context = docContext;
+       if (docEventDate) item.timestamp = toIsoTimestamp(docEventDate);
+-      if (docDocumentId) item.document_id = docDocumentId;
++      if (doc文档Id) item.document_id = doc文档Id;
+       if (parsedTags.length > 0) item.tags = parsedTags;
+       if (docObservationScopes === "per_tag") {
+         item.observation_scopes = "per_tag";
+@@ -404,7 +404,7 @@ function BankSelectorInner() {
+       } else if (docObservationScopes === "all_combinations") {
+         item.observation_scopes = "all_combinations";
+       } else if (docObservationScopes === "custom") {
+-        const customScopes = docObservationScopesCustom
++        const customScopes = docObservationScopes自定义
+           .split("\n")
+           .map((line) =>
+             line
+@@ -417,9 +417,9 @@ function BankSelectorInner() {
+       }
+       const parsedMeta = parseMetadata(docMetadata);
+       if (parsedMeta) item.metadata = parsedMeta;
+-      const parsedEntities = parseEntities(docEntities);
+-      if (parsedEntities) item.entities = parsedEntities;
+-      if (docStrategy) item.strategy = docStrategy;
++      const parsed实体 = parse实体(doc实体);
++      if (parsed实体) item.entities = parsed实体;
++      if (doc策略) item.strategy = doc策略;
+ 
+       await client.retain({
+         bank_id: currentBank,
+@@ -432,15 +432,15 @@ function BankSelectorInner() {
+       setDocContent("");
+       setDocContext("");
+       setDocEventDate("");
+-      setDocDocumentId("");
++      setDoc文档Id("");
+       setDocTags("");
+       setDocObservationScopes("combined");
+-      setDocObservationScopesCustom("");
++      setDocObservationScopes自定义("");
+       setDocMetadata("");
+-      setDocEntities("");
++      setDoc实体("");
+       setDocAdvancedTab("document");
+       setDocAsync(false);
+-      setDocStrategy("");
++      setDoc策略("");
+ 
+       // Navigate to documents view to see the new document
+       router.push(bankRoute(currentBank!, "?view=documents"));
+@@ -555,13 +555,13 @@ function BankSelectorInner() {
+                   })}
+                 </CommandGroup>
+               </CommandList>
+-              {/* Footer: Create new bank */}
++              {/* Footer: 创建 new bank */}
+               <div className="border-t border-border p-1">
+                 <button
+                   className="w-full flex items-center gap-2 px-2 py-2 text-sm rounded-md hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                   onClick={() => {
+                     setOpen(false);
+-                    setCreateDialogOpen(true);
++                    set创建DialogOpen(true);
+                   }}
+                 >
+                   <Plus className="h-4 w-4" />
+@@ -575,7 +575,7 @@ function BankSelectorInner() {
+         {/* Separator */}
+         <div className="h-8 w-px bg-border" />
+ 
+-        {/* Add Document Button */}
++        {/* Add 文档 Button */}
+         {currentBank && (
+           <Button
+             variant="outline"
+@@ -640,19 +640,19 @@ function BankSelectorInner() {
+           </>
+         )}
+ 
+-        <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
++        <Dialog open={createDialogOpen} onOpenChange={set创建DialogOpen}>
+           <DialogContent className="sm:max-w-[550px]">
+             <DialogHeader>
+               <DialogTitle>创建新记忆库</DialogTitle>
+             </DialogHeader>
+             <div className="py-4 space-y-4">
+               <Input
+-                placeholder="Enter bank ID..."
++                placeholder="输入记忆库 ID..."
+                 value={newBankId}
+                 onChange={(e) => setNewBankId(e.target.value)}
+                 onKeyDown={(e) => {
+                   if (e.key === "Enter" && !isCreating && !useTemplate) {
+-                    handleCreateBank();
++                    handle创建Bank();
+                   }
+                 }}
+                 autoFocus
+@@ -669,7 +669,7 @@ function BankSelectorInner() {
+                       }
+                     }}
+                   />
+-                  <label className="text-sm font-medium">Import from template</label>
++                  <label className="text-sm font-medium">从模板导入</label>
+                 </div>
+                 {useTemplate && (
+                   <a
+@@ -685,8 +685,7 @@ function BankSelectorInner() {
+               {useTemplate && (
+                 <div>
+                   <p className="text-xs text-muted-foreground mb-2">
+-                    Paste a template manifest JSON to pre-configure the bank with settings, mental
+-                    models, and directives.
++                    粘贴模板清单 JSON，可为记忆库预设配置、心智模型和指令。
+                   </p>
+                   <Textarea
+                     placeholder='{"version": "1", "bank": {...}, "mental_models": [...]}'
+@@ -708,18 +707,18 @@ function BankSelectorInner() {
+               <Button
+                 variant="secondary"
+                 onClick={() => {
+-                  setCreateDialogOpen(false);
++                  set创建DialogOpen(false);
+                   setNewBankId("");
+                   setUseTemplate(false);
+                   setTemplateJson("");
+-                  setCreateError(null);
++                  set创建Error(null);
+                   setTemplateError(null);
+                 }}
+               >
+-                Cancel
++                取消
+               </Button>
+-              <Button onClick={handleCreateBank} disabled={isCreating || !newBankId.trim()}>
+-                {isCreating ? "Creating..." : "Create"}
++              <Button onClick={handle创建Bank} disabled={isCreating || !newBankId.trim()}>
++                {isCreating ? "创建中..." : "创建"}
+               </Button>
+             </DialogFooter>
+           </DialogContent>
+@@ -728,9 +727,9 @@ function BankSelectorInner() {
+         <Dialog open={docDialogOpen} onOpenChange={setDocDialogOpen}>
+           <DialogContent className="sm:max-w-[750px] max-h-[90vh] flex flex-col">
+             <DialogHeader>
+-              <DialogTitle>Add New Document</DialogTitle>
++              <DialogTitle>添加新文档</DialogTitle>
+               <p className="text-sm text-muted-foreground">
+-                Add a new document to memory bank:{" "}
++                向记忆库添加新文档：{" "}
+                 <span className="font-semibold">{currentBank}</span>
+               </p>
+             </DialogHeader>
+@@ -741,7 +740,7 @@ function BankSelectorInner() {
+                 <TabsList className="grid w-full grid-cols-2">
+                   <TabsTrigger value="text" className="flex items-center gap-2">
+                     <FileText className="h-4 w-4" />
+-                    Text
++                    文本
+                   </TabsTrigger>
+                   <TabsTrigger
+                     value="upload"
+@@ -753,16 +752,16 @@ function BankSelectorInner() {
+                     ) : (
+                       <Upload className="h-4 w-4" />
+                     )}
+-                    Upload Files
++                    上传文件
+                   </TabsTrigger>
+                 </TabsList>
+ 
+                 <TabsContent value="text" className="mt-3">
+-                  <label className="font-bold block mb-1 text-sm text-foreground">Content *</label>
++                  <label className="font-bold block mb-1 text-sm text-foreground">内容 *</label>
+                   <Textarea
+                     value={docContent}
+                     onChange={(e) => setDocContent(e.target.value)}
+-                    placeholder="Enter the document content..."
++                    placeholder="输入文档内容..."
+                     className="min-h-[150px] resize-y"
+                     autoFocus
+                   />
+@@ -773,12 +772,12 @@ function BankSelectorInner() {
+                     <div className="flex flex-col items-center justify-center py-8 text-center space-y-3">
+                       <Lock className="h-12 w-12 text-muted-foreground/50" />
+                       <div>
+-                        <p className="font-semibold text-foreground">File Upload API Disabled</p>
++                        <p className="font-semibold text-foreground">文件上传 API 已禁用</p>
+                         <p className="text-sm text-muted-foreground mt-1">
+-                          File upload is not enabled on this server.
++                          当前服务器未启用文件上传功能。
+                         </p>
+                         <p className="text-xs text-muted-foreground mt-2">
+-                          To enable, set{" "}
++                          如需启用，请设置{" "}
+                           <code className="bg-muted px-1 py-0.5 rounded">
+                             HINDSIGHT_API_ENABLE_FILE_UPLOAD_API=true
+                           </code>
+@@ -801,7 +800,7 @@ function BankSelectorInner() {
+                       >
+                         <Upload className="h-8 w-8 text-muted-foreground mb-2" />
+                         <span className="text-sm text-muted-foreground">
+-                          Click to select files or drag and drop
++                          点击选择文件，或将文件拖拽到此处
+                         </span>
+                       </label>
+ 
+@@ -827,7 +826,7 @@ function BankSelectorInner() {
+                                     type="button"
+                                     className="flex items-center gap-1.5 min-w-0 flex-1 text-left hover:opacity-75 transition-opacity"
+                                     onClick={() => toggleFileExpanded(index)}
+-                                    title="Edit metadata for this file"
++                                    title="编辑此文件的元数据"
+                                   >
+                                     {meta?.expanded ? (
+                                       <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+@@ -875,7 +874,7 @@ function BankSelectorInner() {
+                                           <div className="grid grid-cols-2 gap-2">
+                                             <div>
+                                               <label className="font-bold block mb-1 text-sm text-foreground">
+-                                                Event Date
++                                                事件日期
+                                               </label>
+                                               <Input
+                                                 type="date"
+@@ -888,7 +887,7 @@ function BankSelectorInner() {
+                                             </div>
+                                             <div>
+                                               <label className="font-bold block mb-1 text-sm text-foreground">
+-                                                Document ID
++                                                文档 ID
+                                               </label>
+                                               <Input
+                                                 value={meta.document_id}
+@@ -899,14 +898,14 @@ function BankSelectorInner() {
+                                                     e.target.value
+                                                   )
+                                                 }
+-                                                placeholder="Optional ID..."
++                                                placeholder="可选 ID..."
+                                                 className="h-8 text-sm"
+                                               />
+                                             </div>
+                                           </div>
+                                           <div>
+                                             <label className="font-bold block mb-1 text-sm text-foreground">
+-                                              Strategy
++                                              策略
+                                             </label>
+                                             {bankStrategies.length > 0 ? (
+                                               <Select
+@@ -925,7 +924,7 @@ function BankSelectorInner() {
+                                                 <SelectContent>
+                                                   <SelectItem value="__none__">
+                                                     <span className="text-muted-foreground italic">
+-                                                      Default
++                                                      默认
+                                                     </span>
+                                                   </SelectItem>
+                                                   {bankStrategies.map((name) => (
+@@ -941,7 +940,7 @@ function BankSelectorInner() {
+                                                 onChange={(e) =>
+                                                   updateFileMeta(index, "strategy", e.target.value)
+                                                 }
+-                                                placeholder="Strategy name (optional)..."
++                                                placeholder="策略 name (optional)..."
+                                                 className="h-8 text-sm"
+                                               />
+                                             )}
+@@ -957,12 +956,11 @@ function BankSelectorInner() {
+                                               onChange={(e) =>
+                                                 updateFileMeta(index, "tags", e.target.value)
+                                               }
+-                                              placeholder="tag1, tag2..."
++                                              placeholder="标签1，标签2..."
+                                               className="h-8 text-sm"
+                                             />
+                                             <p className="text-xs text-muted-foreground mt-1">
+-                                              Comma-separated — used to filter memories during
+-                                              recall/reflect
++                                              使用逗号分隔——用于在回忆/反思时筛选记忆
+                                             </p>
+                                           </div>
+                                         </TabsContent>
+@@ -976,7 +974,7 @@ function BankSelectorInner() {
+                                               onChange={(e) =>
+                                                 updateFileMeta(index, "context", e.target.value)
+                                               }
+-                                              placeholder="Optional context..."
++                                              placeholder="可选上下文..."
+                                               className="h-8 text-sm"
+                                             />
+                                           </div>
+@@ -1020,7 +1018,7 @@ function BankSelectorInner() {
+                     type="text"
+                     value={docContext}
+                     onChange={(e) => setDocContext(e.target.value)}
+-                    placeholder="Optional context about this document..."
++                    placeholder="填写与此文档相关的可选上下文..."
+                   />
+                 </div>
+               )}
+@@ -1037,7 +1035,7 @@ function BankSelectorInner() {
+                         value="document"
+                         className="rounded-none h-full px-4 text-xs font-medium bg-transparent shadow-none text-muted-foreground hover:text-foreground data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary -mb-px"
+                       >
+-                        Document
++                        文档
+                       </TabsTrigger>
+                       <TabsTrigger
+                         value="tags"
+@@ -1049,7 +1047,7 @@ function BankSelectorInner() {
+                         value="source"
+                         className="rounded-none h-full px-4 text-xs font-medium bg-transparent shadow-none text-muted-foreground hover:text-foreground data-[state=active]:text-foreground data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-primary -mb-px"
+                       >
+-                        Source
++                        来源
+                       </TabsTrigger>
+                     </TabsList>
+ 
+@@ -1058,7 +1056,7 @@ function BankSelectorInner() {
+                         <div className="grid grid-cols-2 gap-3">
+                           <div>
+                             <label className="font-bold block mb-1 text-sm text-foreground">
+-                              Event Date
++                              事件日期
+                             </label>
+                             <Input
+                               type="date"
+@@ -1069,31 +1067,31 @@ function BankSelectorInner() {
+                           </div>
+                           <div>
+                             <label className="font-bold block mb-1 text-sm text-foreground">
+-                              Document ID
++                              文档 ID
+                             </label>
+                             <Input
+                               type="text"
+-                              value={docDocumentId}
+-                              onChange={(e) => setDocDocumentId(e.target.value)}
+-                              placeholder="Optional document identifier..."
++                              value={doc文档Id}
++                              onChange={(e) => setDoc文档Id(e.target.value)}
++                              placeholder="可选文档标识..."
+                             />
+                           </div>
+                         </div>
+                         <div>
+                           <label className="font-bold block mb-1 text-sm text-foreground">
+-                            Strategy
++                            策略
+                           </label>
+                           {bankStrategies.length > 0 ? (
+                             <Select
+-                              value={docStrategy || "__none__"}
+-                              onValueChange={(v) => setDocStrategy(v === "__none__" ? "" : v)}
++                              value={doc策略 || "__none__"}
++                              onValueChange={(v) => setDoc策略(v === "__none__" ? "" : v)}
+                             >
+                               <SelectTrigger className="w-full">
+                                 <SelectValue />
+                               </SelectTrigger>
+                               <SelectContent>
+                                 <SelectItem value="__none__">
+-                                  <span className="text-muted-foreground italic">Default</span>
++                                  <span className="text-muted-foreground italic">默认</span>
+                                 </SelectItem>
+                                 {bankStrategies.map((name) => (
+                                   <SelectItem key={name} value={name}>
+@@ -1105,13 +1103,13 @@ function BankSelectorInner() {
+                           ) : (
+                             <Input
+                               type="text"
+-                              value={docStrategy}
+-                              onChange={(e) => setDocStrategy(e.target.value)}
+-                              placeholder="Strategy name (optional)..."
++                              value={doc策略}
++                              onChange={(e) => setDoc策略(e.target.value)}
++                              placeholder="策略 name (optional)..."
+                             />
+                           )}
+                           <p className="text-xs text-muted-foreground mt-1">
+-                            Override the bank&apos;s default extraction strategy for this document.
++                            为该文档覆盖记忆库默认的提取策略。
+                           </p>
+                         </div>
+                         <div className="flex items-center gap-2">
+@@ -1124,7 +1122,7 @@ function BankSelectorInner() {
+                             htmlFor="async-doc"
+                             className="text-sm cursor-pointer text-foreground"
+                           >
+-                            Process in background (async)
++                            在后台处理（异步）
+                           </label>
+                         </div>
+                       </TabsContent>
+@@ -1146,7 +1144,7 @@ function BankSelectorInner() {
+                         </div>
+                         <div>
+                           <label className="font-bold block mb-1 text-sm text-foreground">
+-                            Observation Scopes
++                            观察范围
+                           </label>
+                           <Select
+                             value={docObservationScopes}
+@@ -1160,10 +1158,10 @@ function BankSelectorInner() {
+                               <SelectValue />
+                             </SelectTrigger>
+                             <SelectContent>
+-                              <SelectItem value="per_tag">Per tag</SelectItem>
+-                              <SelectItem value="combined">Combined</SelectItem>
+-                              <SelectItem value="all_combinations">All combinations</SelectItem>
+-                              <SelectItem value="custom">Custom</SelectItem>
++                              <SelectItem value="per_tag">按标签分别</SelectItem>
++                              <SelectItem value="combined">合并</SelectItem>
++                              <SelectItem value="all_combinations">所有组合</SelectItem>
++                              <SelectItem value="custom">自定义</SelectItem>
+                             </SelectContent>
+                           </Select>
+                           {docObservationScopes !== "custom" &&
+@@ -1177,7 +1175,7 @@ function BankSelectorInner() {
+                               if (tags.length === 0) {
+                                 return (
+                                   <p className="text-xs text-muted-foreground/60 mt-1.5 italic">
+-                                    Add tags above to preview observation scopes
++                                    请先填写上方标签以预览观察范围
+                                   </p>
+                                 );
+                               }
+@@ -1195,7 +1193,7 @@ function BankSelectorInner() {
+                                   ))}
+                                   {scopes.length > MAX && (
+                                     <li className="text-xs text-muted-foreground">
+-                                      +{scopes.length - MAX} more scopes
++                                      +{scopes.length - MAX} 个范围
+                                     </li>
+                                   )}
+                                 </ul>
+@@ -1203,8 +1201,8 @@ function BankSelectorInner() {
+                             })()}
+                           {docObservationScopes === "custom" && (
+                             <Textarea
+-                              value={docObservationScopesCustom}
+-                              onChange={(e) => setDocObservationScopesCustom(e.target.value)}
++                              value={docObservationScopes自定义}
++                              onChange={(e) => setDocObservationScopes自定义(e.target.value)}
+                               placeholder={"user:alice\nuser:alice, place:online"}
+                               className="min-h-[72px] resize-y font-mono text-sm mt-2"
+                             />
+@@ -1224,21 +1222,21 @@ function BankSelectorInner() {
+                             className="min-h-[72px] resize-y font-mono text-sm"
+                           />
+                           <p className="text-xs text-muted-foreground mt-1">
+-                            One <code className="bg-muted px-0.5 rounded">key: value</code> per line
++                            每行一条 <code className="bg-muted px-0.5 rounded">key: value</code>
+                           </p>
+                         </div>
+                         <div>
+                           <label className="font-bold block mb-1 text-sm text-foreground">
+-                            Entities
++                            实体
+                           </label>
+                           <Input
+                             type="text"
+-                            value={docEntities}
+-                            onChange={(e) => setDocEntities(e.target.value)}
++                            value={doc实体}
++                            onChange={(e) => setDoc实体(e.target.value)}
+                             placeholder="Alice, Google, ML model"
+                           />
+                           <p className="text-xs text-muted-foreground mt-1">
+-                            Comma-separated hints merged with auto-extracted entities
++                            使用逗号分隔的提示词，会与自动提取的实体合并
+                           </p>
+                         </div>
+                       </TabsContent>
+@@ -1256,12 +1254,12 @@ function BankSelectorInner() {
+                   setDocContent("");
+                   setDocContext("");
+                   setDocEventDate("");
+-                  setDocDocumentId("");
++                  setDoc文档Id("");
+                   setDocTags("");
+                   setDocObservationScopes("combined");
+-                  setDocObservationScopesCustom("");
++                  setDocObservationScopes自定义("");
+                   setDocMetadata("");
+-                  setDocEntities("");
++                  setDoc实体("");
+                   setDocAdvancedTab("document");
+                   setDocAsync(false);
+                   setSelectedFiles([]);
+@@ -1269,14 +1267,14 @@ function BankSelectorInner() {
+                   setUploadProgress("");
+                 }}
+               >
+-                Cancel
++                取消
+               </Button>
+               {docTab === "text" ? (
+                 <Button
+-                  onClick={handleCreateDocument}
++                  onClick={handle创建文档}
+                   disabled={isCreatingDoc || !docContent.trim()}
+                 >
+-                  {isCreatingDoc ? "Adding..." : "Add Document"}
++                  {isCreatingDoc ? "添加中..." : "Add 文档"}
+                 </Button>
+               ) : (
+                 <Button
+@@ -1284,8 +1282,8 @@ function BankSelectorInner() {
+                   disabled={isCreatingDoc || selectedFiles.length === 0}
+                 >
+                   {isCreatingDoc
+-                    ? uploadProgress || "Uploading..."
+-                    : `Upload ${selectedFiles.length} File${selectedFiles.length !== 1 ? "s" : ""}`}
++                    ? uploadProgress || "上传中..."
++                    : `上传 ${selectedFiles.length} 个文件`}
+                 </Button>
+               )}
+             </DialogFooter>
+@@ -1316,7 +1314,7 @@ export function BankSelector() {
+               className="w-[250px] justify-between font-bold border-2 border-primary"
+               disabled
+             >
+-              Loading...
++              加载中...
+               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+             </Button>
+             <div className="flex-1" />
+diff --git a/hindsight-control-plane/src/components/data-view.tsx b/hindsight-control-plane/src/components/data-view.tsx
+index 77a6bc8..887f1ec 100644
+--- a/hindsight-control-plane/src/components/data-view.tsx
++++ b/hindsight-control-plane/src/components/data-view.tsx
+@@ -85,8 +85,8 @@ export function DataView({
+   type RecencyBasis = "提及时间_at" | "occurred_start" | "occurred_end";
+   const RECENCY_BASIS_LABEL: Record<RecencyBasis, string> = {
+     提及时间_at: "提及时间",
+-    occurred_start: "occurred (start)",
+-    occurred_end: "occurred (end)",
++    occurred_start: "发生时间（开始）",
++    occurred_end: "发生时间（结束）",
+   };
+   const [recencyBasis, setRecencyBasis] = useState<RecencyBasis>("提及时间_at");
+ 
+@@ -745,7 +745,7 @@ export function DataView({
+                               <span className="text-xs text-muted-foreground">
+                                 {图谱2DData.nodes.length > 50
+                                   ? `${maxNodes ?? 50} / ${图谱2DData.nodes.length}`
+-                                  : `${maxNodes ?? "All"} / ${图谱2DData.nodes.length}`}
++                                  : `${maxNodes ?? "全部"} / ${图谱2DData.nodes.length}`}
+                               </span>
+                             </div>
+                             <Slider
+diff --git a/hindsight-control-plane/src/components/document-chunk-modal.tsx b/hindsight-control-plane/src/components/document-chunk-modal.tsx
+index 9065529..c47d7c6 100644
+--- a/hindsight-control-plane/src/components/document-chunk-modal.tsx
++++ b/hindsight-control-plane/src/components/document-chunk-modal.tsx
+@@ -60,9 +60,7 @@ export function DocumentChunkModal({ type, id, onClose }: DocumentChunkModalProp
+         <DialogHeader>
+           <DialogTitle>{type === "document" ? "文档详情" : "分块详情"}</DialogTitle>
+           <DialogDescription>
+-            {type === "document"
+-              ? "查看原始文档文本和元数据"
+-              : "查看分块文本和元数据"}
++            {type === "document" ? "查看原始文档文本和元数据" : "查看分块文本和元数据"}
+           </DialogDescription>
+         </DialogHeader>
+ 
+diff --git a/hindsight-control-plane/src/components/documents-view.tsx b/hindsight-control-plane/src/components/documents-view.tsx
+index 04219e9..05b61cd 100644
+--- a/hindsight-control-plane/src/components/documents-view.tsx
++++ b/hindsight-control-plane/src/components/documents-view.tsx
+@@ -60,14 +60,14 @@ function formatRelativeTime(dateStr: string): string {
+   const seconds = Math.floor((now - then) / 1000);
+   if (seconds < 60) return "刚刚";
+   const minutes = Math.floor(seconds / 60);
+-  if (minutes < 60) return `${minutes}m ago`;
++  if (minutes < 60) return `${minutes} 分钟前`;
+   const hours = Math.floor(minutes / 60);
+-  if (hours < 24) return `${hours}h ago`;
++  if (hours < 24) return `${hours} 小时前`;
+   const days = Math.floor(hours / 24);
+-  if (days < 30) return `${days}d ago`;
++  if (days < 30) return `${days} 天前`;
+   const months = Math.floor(days / 30);
+-  if (months < 12) return `${months}mo ago`;
+-  return `${Math.floor(months / 12)}y ago`;
++  if (months < 12) return `${months} 个月前`;
++  return `${Math.floor(months / 12)} 年前`;
+ }
+ 
+ function formatBytes(bytes: number): string {
+@@ -76,7 +76,7 @@ function formatBytes(bytes: number): string {
+   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+ }
+ 
+-function MetadataBadges({ metadata }: { metadata: Record<string, any> }) {
++function 元数据Badges({ metadata }: { metadata: Record<string, any> }) {
+   const entries = Object.entries(metadata);
+   if (entries.length === 0) return <span>-</span>;
+   return (
+@@ -126,7 +126,7 @@ function InfoCard({
+   );
+ }
+ 
+-function MetadataRow({ label, value }: { label: string; value: React.ReactNode }) {
++function 元数据Row({ label, value }: { label: string; value: React.ReactNode }) {
+   return (
+     <div>
+       <SectionLabel>{label}</SectionLabel>
+@@ -225,7 +225,7 @@ function ChunkMemoriesHeader({
+               : "text-muted-foreground hover:text-foreground"
+           }`}
+         >
+-          {ft === "observation" ? "观察" : ft.charAt(0).toUpperCase() + ft.slice(1)}
++          {ft === "world" ? "世界事实" : ft === "experience" ? "经验事实" : "观察"}
+         </button>
+       ))}
+     </div>
+@@ -274,7 +274,7 @@ function ChunkRow({ chunk }: { chunk: any }) {
+                 className="h-6 px-2 text-xs gap-1"
+               >
+                 <Eye className="w-3 h-3" />
+-                Compact
++                紧凑视图
+               </Button>
+             </div>
+             <div className="flex-1 min-h-0">
+@@ -332,14 +332,14 @@ export function DocumentsView() {
+   const [deletingDocumentId, setDeletingDocumentId] = useState<string | null>(null);
+ 
+   // Tag editing state
+-  const [editingTags, setEditingTags] = useState(false);
++  const [editing标签, set编辑ing标签] = useState(false);
+   const [tagInput, setTagInput] = useState("");
+-  const [savingTags, setSavingTags] = useState(false);
++  const [saving标签, setSaving标签] = useState(false);
+ 
+-  // Content editing state
+-  const [editingContent, setEditingContent] = useState(false);
+-  const [contentInput, setContentInput] = useState("");
+-  const [savingContent, setSavingContent] = useState(false);
++  // 内容 editing state
++  const [editing内容, set编辑ing内容] = useState(false);
++  const [contentInput, set内容Input] = useState("");
++  const [saving内容, setSaving内容] = useState(false);
+ 
+   // Chunks state
+   const [chunks, setChunks] = useState<any[]>([]);
+@@ -347,19 +347,19 @@ export function DocumentsView() {
+   const [loadingChunks, setLoadingChunks] = useState(false);
+   const [chunksLoaded, setChunksLoaded] = useState(false);
+ 
+-  // Reprocess state
+-  const [reprocessing, setReprocessing] = useState(false);
+-  const [reprocessResult, setReprocessResult] = useState<{
++  // 重新处理 state
++  const [reprocessing, set重新处理ing] = useState(false);
++  const [reprocessResult, set重新处理Result] = useState<{
+     success: boolean;
+     message: string;
+   } | null>(null);
+ 
+-  // Delete confirmation dialog state
+-  const [documentToDelete, setDocumentToDelete] = useState<{
++  // 删除 confirmation dialog state
++  const [documentTo删除, setDocumentTo删除] = useState<{
+     id: string;
+     memoryCount?: number;
+   } | null>(null);
+-  const [deleteResult, setDeleteResult] = useState<{ success: boolean; message: string } | null>(
++  const [deleteResult, set删除Result] = useState<{ success: boolean; message: string } | null>(
+     null
+   );
+ 
+@@ -395,10 +395,10 @@ export function DocumentsView() {
+ 
+     setLoadingDocument(true);
+     setSelectedDocument({ id: documentId }); // Set placeholder to show loading
+-    setEditingTags(false);
++    set编辑ing标签(false);
+     setTagInput("");
+-    setEditingContent(false);
+-    setContentInput("");
++    set编辑ing内容(false);
++    set内容Input("");
+     setChunks([]);
+     setChunksTotal(0);
+     setChunksLoaded(false);
+@@ -437,35 +437,35 @@ export function DocumentsView() {
+   const reprocessDocument = async () => {
+     if (!currentBank || !selectedDocument) return;
+ 
+-    setReprocessing(true);
++    set重新处理ing(true);
+     try {
+       const result = await client.reprocessDocument(selectedDocument.id, currentBank);
+-      setReprocessResult({
++      set重新处理Result({
+         success: true,
+-        message: `Reprocessing started (operation: ${result.operation_id})`,
++        message: `重新处理ing started (operation: ${result.operation_id})`,
+       });
+     } catch (error) {
+-      setReprocessResult({
++      set重新处理Result({
+         success: false,
+         message: "Error reprocessing document: " + (error as Error).message,
+       });
+     } finally {
+-      setReprocessing(false);
++      set重新处理ing(false);
+     }
+   };
+ 
+-  const confirmDeleteDocument = async () => {
+-    if (!currentBank || !documentToDelete) return;
++  const confirm删除Document = async () => {
++    if (!currentBank || !documentTo删除) return;
+ 
+-    const documentId = documentToDelete.id;
++    const documentId = documentTo删除.id;
+     setDeletingDocumentId(documentId);
+-    setDocumentToDelete(null);
++    setDocumentTo删除(null);
+ 
+     try {
+       const result = await client.deleteDocument(documentId, currentBank);
+-      setDeleteResult({
++      set删除Result({
+         success: true,
+-        message: `Deleted document and ${result.memory_units_deleted} memory units.`,
++        message: `删除d document and ${result.memory_units_deleted} 个记忆单元.`,
+       });
+ 
+       // Close panel if this document was selected
+@@ -477,7 +477,7 @@ export function DocumentsView() {
+       loadDocuments(currentPage);
+     } catch (error) {
+       console.error("Error deleting document:", error);
+-      setDeleteResult({
++      set删除Result({
+         success: false,
+         message: "Error deleting document: " + (error as Error).message,
+       });
+@@ -486,39 +486,39 @@ export function DocumentsView() {
+     }
+   };
+ 
+-  const requestDeleteDocument = (documentId: string, memoryCount?: number) => {
+-    setDocumentToDelete({ id: documentId, memoryCount });
++  const request删除Document = (documentId: string, memoryCount?: number) => {
++    setDocumentTo删除({ id: documentId, memoryCount });
+   };
+ 
+-  const startEditTags = () => {
++  const start编辑标签 = () => {
+     setTagInput((selectedDocument?.tags ?? []).join(", "));
+-    setEditingTags(true);
++    set编辑ing标签(true);
+   };
+ 
+-  const cancelEditTags = () => {
+-    setEditingTags(false);
++  const cancel编辑标签 = () => {
++    set编辑ing标签(false);
+     setTagInput("");
+   };
+ 
+-  const startEditContent = () => {
+-    setContentInput(selectedDocument?.original_text ?? "");
+-    setEditingContent(true);
++  const start编辑内容 = () => {
++    set内容Input(selectedDocument?.original_text ?? "");
++    set编辑ing内容(true);
+   };
+ 
+-  const cancelEditContent = () => {
+-    setEditingContent(false);
+-    setContentInput("");
++  const cancel编辑内容 = () => {
++    set编辑ing内容(false);
++    set内容Input("");
+   };
+ 
+-  const saveDocumentContent = async () => {
++  const saveDocument内容 = async () => {
+     if (!currentBank || !selectedDocument) return;
+ 
+-    const newContent = contentInput;
+-    if (!newContent.trim()) return;
++    const new内容 = contentInput;
++    if (!new内容.trim()) return;
+ 
+     const retainParams = selectedDocument.retain_params ?? {};
+     const item: Parameters<typeof client.retain>[0]["items"][number] = {
+-      content: newContent,
++      content: new内容,
+       document_id: selectedDocument.id,
+     };
+     if (retainParams.context) item.context = retainParams.context;
+@@ -530,7 +530,7 @@ export function DocumentsView() {
+       item.tags = selectedDocument.tags;
+     }
+ 
+-    setSavingContent(true);
++    setSaving内容(true);
+     try {
+       await client.retain({
+         bank_id: currentBank,
+@@ -540,38 +540,38 @@ export function DocumentsView() {
+       // Refresh the document and the list
+       const doc: any = await client.getDocument(selectedDocument.id, currentBank);
+       setSelectedDocument(doc);
+-      setEditingContent(false);
+-      setContentInput("");
++      set编辑ing内容(false);
++      set内容Input("");
+       loadDocuments(currentPage);
+     } catch (error) {
+       console.error("Error updating document content:", error);
+     } finally {
+-      setSavingContent(false);
++      setSaving内容(false);
+     }
+   };
+ 
+-  const saveDocumentTags = async () => {
++  const saveDocument标签 = async () => {
+     if (!currentBank || !selectedDocument) return;
+ 
+-    const newTags = tagInput
++    const new标签 = tagInput
+       .split(",")
+       .map((t) => t.trim())
+       .filter((t) => t.length > 0);
+ 
+-    setSavingTags(true);
++    setSaving标签(true);
+     try {
+-      await client.updateDocument(selectedDocument.id, currentBank, newTags);
+-      setSelectedDocument({ ...selectedDocument, tags: newTags });
++      await client.updateDocument(selectedDocument.id, currentBank, new标签);
++      setSelectedDocument({ ...selectedDocument, tags: new标签 });
+       // Update tags in the documents list too
+       setDocuments((prev) =>
+-        prev.map((d) => (d.id === selectedDocument.id ? { ...d, tags: newTags } : d))
++        prev.map((d) => (d.id === selectedDocument.id ? { ...d, tags: new标签 } : d))
+       );
+-      setEditingTags(false);
++      set编辑ing标签(false);
+       setTagInput("");
+     } catch (error) {
+       console.error("Error updating document tags:", error);
+     } finally {
+-      setSavingTags(false);
++      setSaving标签(false);
+     }
+   };
+ 
+@@ -602,13 +602,13 @@ export function DocumentsView() {
+         <div className="flex items-center justify-center py-20">
+           <div className="text-center">
+             <div className="text-4xl mb-2">⏳</div>
+-            <div className="text-sm text-muted-foreground">Loading documents...</div>
++            <div className="text-sm text-muted-foreground">正在加载文档...</div>
+           </div>
+         </div>
+       ) : documents.length > 0 ? (
+         <>
+           <div className="mb-4 text-sm text-muted-foreground">
+-            {total} {total === 1 ? "document" : "documents"}
++            共 {total} 个文档
+           </div>
+           {/* Documents Table */}
+           <div className="w-full">
+@@ -617,7 +617,7 @@ export function DocumentsView() {
+                 type="text"
+                 value={searchQuery}
+                 onChange={(e) => setSearchQuery(e.target.value)}
+-                placeholder="Search documents (ID)..."
++                placeholder="搜索文档（ID）..."
+                 className="max-w-2xl"
+               />
+             </div>
+@@ -626,13 +626,13 @@ export function DocumentsView() {
+               <Table>
+                 <TableHeader>
+                   <TableRow>
+-                    <TableHead>Document ID</TableHead>
+-                    <TableHead>Created</TableHead>
+-                    <TableHead>Updated</TableHead>
+-                    <TableHead>Tags</TableHead>
+-                    <TableHead>Metadata</TableHead>
+-                    <TableHead>Size</TableHead>
+-                    <TableHead>Memory Units</TableHead>
++                    <TableHead>文档 ID</TableHead>
++                    <TableHead>创建时间</TableHead>
++                    <TableHead>更新时间</TableHead>
++                    <TableHead>标签</TableHead>
++                    <TableHead>元数据</TableHead>
++                    <TableHead>大小</TableHead>
++                    <TableHead>记忆单元</TableHead>
+                   </TableRow>
+                 </TableHeader>
+                 <TableBody>
+@@ -650,13 +650,13 @@ export function DocumentsView() {
+                           className="text-card-foreground"
+                           title={doc.created_at ? new Date(doc.created_at).toLocaleString() : ""}
+                         >
+-                          {doc.created_at ? formatRelativeTime(doc.created_at) : "N/A"}
++                          {doc.created_at ? formatRelativeTime(doc.created_at) : "暂无"}
+                         </TableCell>
+                         <TableCell
+                           className="text-card-foreground"
+                           title={doc.updated_at ? new Date(doc.updated_at).toLocaleString() : ""}
+                         >
+-                          {doc.updated_at ? formatRelativeTime(doc.updated_at) : "N/A"}
++                          {doc.updated_at ? formatRelativeTime(doc.updated_at) : "暂无"}
+                         </TableCell>
+                         <TableCell className="text-card-foreground">
+                           {doc.tags && doc.tags.length > 0 ? (
+@@ -682,7 +682,7 @@ export function DocumentsView() {
+                         <TableCell className="text-card-foreground">
+                           {doc.document_metadata &&
+                           Object.keys(doc.document_metadata).length > 0 ? (
+-                            <MetadataBadges metadata={doc.document_metadata} />
++                            <元数据Badges metadata={doc.document_metadata} />
+                           ) : (
+                             "-"
+                           )}
+@@ -698,7 +698,7 @@ export function DocumentsView() {
+                   ) : (
+                     <TableRow>
+                       <TableCell colSpan={7} className="text-center">
+-                        Click "Load Documents" to view data
++                        点击文档即可查看详情
+                       </TableCell>
+                     </TableRow>
+                   )}
+@@ -761,7 +761,7 @@ export function DocumentsView() {
+         <div className="flex items-center justify-center py-20">
+           <div className="text-center">
+             <div className="text-4xl mb-2">📄</div>
+-            <div className="text-sm text-muted-foreground">No documents found</div>
++            <div className="text-sm text-muted-foreground">未找到文档</div>
+           </div>
+         </div>
+       )}
+@@ -772,7 +772,7 @@ export function DocumentsView() {
+           <DialogHeader className="pr-10">
+             <DialogTitle className="flex items-center gap-2">
+               <span className="truncate font-mono text-sm">
+-                {selectedDocument?.id ?? "Document"}
++                {selectedDocument?.id ?? "文档"}
+               </span>
+             </DialogTitle>
+           </DialogHeader>
+@@ -781,7 +781,7 @@ export function DocumentsView() {
+             <div className="flex items-center justify-center flex-1">
+               <div className="text-center">
+                 <div className="text-4xl mb-2">⏳</div>
+-                <div className="text-sm text-muted-foreground">Loading document...</div>
++                <div className="text-sm text-muted-foreground">正在加载文档...</div>
+               </div>
+             </div>
+           ) : selectedDocument ? (
+@@ -790,11 +790,11 @@ export function DocumentsView() {
+                 <TabsList className="grid grid-cols-3 w-full max-w-md">
+                   <TabsTrigger value="general" className="flex items-center gap-1.5">
+                     <Settings className="w-3.5 h-3.5" />
+-                    General
++                    概览
+                   </TabsTrigger>
+                   <TabsTrigger value="content" className="flex items-center gap-1.5">
+                     <FileText className="w-3.5 h-3.5" />
+-                    Content
++                    内容
+                   </TabsTrigger>
+                   <TabsTrigger
+                     value="chunks"
+@@ -824,12 +824,12 @@ export function DocumentsView() {
+                   <DropdownMenuContent align="end">
+                     <DropdownMenuItem onClick={reprocessDocument} disabled={reprocessing}>
+                       <RefreshCw className="h-4 w-4 mr-2" />
+-                      Reprocess
++                      重新处理
+                     </DropdownMenuItem>
+                     <DropdownMenuSeparator />
+                     <DropdownMenuItem
+                       onClick={() =>
+-                        requestDeleteDocument(
++                        request删除Document(
+                           selectedDocument.id,
+                           selectedDocument.memory_unit_count
+                         )
+@@ -837,54 +837,53 @@ export function DocumentsView() {
+                       className="text-red-600 focus:text-red-600 dark:text-red-400 dark:focus:text-red-400 focus:bg-red-500/10"
+                     >
+                       <Trash2 className="h-4 w-4 mr-2" />
+-                      Delete
++                      删除
+                     </DropdownMenuItem>
+                   </DropdownMenuContent>
+                 </DropdownMenu>
+               </div>
+ 
+               <div className="flex-1 overflow-y-auto mt-4">
+-                {/* Content Tab */}
++                {/* 内容 Tab */}
+                 <TabsContent value="content" className="mt-0">
+                   {selectedDocument.original_text !== undefined &&
+-                    (editingContent ? (
++                    (editing内容 ? (
+                       <div className="space-y-2">
+                         <div className="flex items-center justify-end mb-2">
+                           <div className="flex gap-2">
+                             <Button
+                               size="sm"
+-                              onClick={saveDocumentContent}
+-                              disabled={savingContent || !contentInput.trim()}
++                              onClick={saveDocument内容}
++                              disabled={saving内容 || !contentInput.trim()}
+                               className="h-7 px-3 gap-1 text-xs"
+                             >
+-                              {savingContent ? (
++                              {saving内容 ? (
+                                 <span className="animate-spin">⏳</span>
+                               ) : (
+                                 <Check className="h-3 w-3" />
+                               )}
+-                              Save
++                              保存
+                             </Button>
+                             <Button
+                               variant="outline"
+                               size="sm"
+-                              onClick={cancelEditContent}
+-                              disabled={savingContent}
++                              onClick={cancel编辑内容}
++                              disabled={saving内容}
+                               className="h-7 px-3 gap-1 text-xs"
+                             >
+                               <X className="h-3 w-3" />
+-                              Cancel
++                              取消
+                             </Button>
+                           </div>
+                         </div>
+                         <textarea
+                           value={contentInput}
+-                          onChange={(e) => setContentInput(e.target.value)}
++                          onChange={(e) => set内容Input(e.target.value)}
+                           className="w-full min-h-[400px] max-h-[600px] p-4 bg-muted/50 rounded-lg border border-border text-sm font-mono leading-relaxed text-card-foreground resize-y"
+                           autoFocus
+                         />
+                         <p className="text-xs text-muted-foreground">
+-                          Saving will re-ingest this document via retain (upsert). Existing memory
+-                          units for this document will be replaced.
++                          保存后会通过 retain（upsert）重新写入此文档，并替换该文档已有的记忆单元。
+                         </p>
+                       </div>
+                     ) : (
+@@ -893,7 +892,7 @@ export function DocumentsView() {
+                           <div className="flex items-center gap-1.5">
+                             <FileText className="w-3.5 h-3.5" />
+                             <span className="font-semibold uppercase tracking-wide">
+-                              Stored content
++                              已存储内容
+                             </span>
+                             <span className="text-muted-foreground/70">
+                               &middot;{" "}
+@@ -903,11 +902,11 @@ export function DocumentsView() {
+                           <Button
+                             variant="ghost"
+                             size="sm"
+-                            onClick={startEditContent}
++                            onClick={start编辑内容}
+                             className="h-6 px-2 gap-1 text-xs"
+                           >
+                             <Pencil className="h-3 w-3" />
+-                            Edit
++                            编辑
+                           </Button>
+                         </div>
+                         <pre className="p-4 text-[11px] leading-5 text-foreground/80 whitespace-pre-wrap font-mono">
+@@ -917,7 +916,7 @@ export function DocumentsView() {
+                     ))}
+                 </TabsContent>
+ 
+-                {/* General Tab */}
++                {/* 概览 Tab */}
+                 <TabsContent value="general" className="mt-0">
+                   <div className="space-y-4">
+                     {/* Memories constellation — first */}
+@@ -950,48 +949,48 @@ export function DocumentsView() {
+ 
+                     {/* Info cards */}
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+-                      <InfoCard title="Document" icon={<FileText className="w-3.5 h-3.5" />}>
++                      <InfoCard title="文档信息" icon={<FileText className="w-3.5 h-3.5" />}>
+                         {selectedDocument.created_at && (
+-                          <MetadataRow
+-                            label="Created"
++                          <元数据Row
++                            label="创建时间"
+                             value={new Date(selectedDocument.created_at).toLocaleString()}
+                           />
+                         )}
+                         {selectedDocument.updated_at && (
+-                          <MetadataRow
+-                            label="Updated"
++                          <元数据Row
++                            label="更新时间"
+                             value={new Date(selectedDocument.updated_at).toLocaleString()}
+                           />
+                         )}
+                         {selectedDocument.original_text && (
+-                          <MetadataRow
+-                            label="Size"
++                          <元数据Row
++                            label="大小"
+                             value={formatBytes(new Blob([selectedDocument.original_text]).size)}
+                           />
+                         )}
+-                        <MetadataRow
+-                          label="Tags"
++                        <元数据Row
++                          label="标签"
+                           value={
+-                            editingTags ? (
++                            editing标签 ? (
+                               <div className="flex items-center gap-2">
+                                 <Input
+                                   value={tagInput}
+                                   onChange={(e) => setTagInput(e.target.value)}
+-                                  placeholder="tag1, tag2, tag3"
++                                  placeholder="标签1，标签2，标签3"
+                                   className="text-sm h-7 w-64"
+                                   onKeyDown={(e) => {
+-                                    if (e.key === "Enter") saveDocumentTags();
+-                                    if (e.key === "Escape") cancelEditTags();
++                                    if (e.key === "Enter") saveDocument标签();
++                                    if (e.key === "Escape") cancel编辑标签();
+                                   }}
+                                   autoFocus
+                                 />
+                                 <Button
+                                   size="sm"
+-                                  onClick={saveDocumentTags}
+-                                  disabled={savingTags}
++                                  onClick={saveDocument标签}
++                                  disabled={saving标签}
+                                   className="h-7 w-7 p-0"
+                                 >
+-                                  {savingTags ? (
++                                  {saving标签 ? (
+                                     <span className="animate-spin text-xs">⏳</span>
+                                   ) : (
+                                     <Check className="h-3 w-3" />
+@@ -1000,8 +999,8 @@ export function DocumentsView() {
+                                 <Button
+                                   variant="outline"
+                                   size="sm"
+-                                  onClick={cancelEditTags}
+-                                  disabled={savingTags}
++                                  onClick={cancel编辑标签}
++                                  disabled={saving标签}
+                                   className="h-7 w-7 p-0"
+                                 >
+                                   <X className="h-3 w-3" />
+@@ -1021,12 +1020,12 @@ export function DocumentsView() {
+                                     ))}
+                                   </div>
+                                 ) : (
+-                                  <span className="text-sm text-muted-foreground italic">none</span>
++                                  <span className="text-sm text-muted-foreground italic">无</span>
+                                 )}
+                                 <Button
+                                   variant="ghost"
+                                   size="sm"
+-                                  onClick={startEditTags}
++                                  onClick={start编辑标签}
+                                   className="h-6 w-6 p-0"
+                                 >
+                                   <Pencil className="h-3 w-3" />
+@@ -1036,14 +1035,14 @@ export function DocumentsView() {
+                           }
+                         />
+                         {selectedDocument.retain_params?.context && (
+-                          <MetadataRow
+-                            label="Context"
++                          <元数据Row
++                            label="上下文"
+                             value={selectedDocument.retain_params.context}
+                           />
+                         )}
+                         {selectedDocument.retain_params?.event_date && (
+-                          <MetadataRow
+-                            label="Event Date"
++                          <元数据Row
++                            label="事件日期"
+                             value={new Date(
+                               selectedDocument.retain_params.event_date
+                             ).toLocaleString()}
+@@ -1051,10 +1050,10 @@ export function DocumentsView() {
+                         )}
+                         {selectedDocument.retain_params?.metadata &&
+                           Object.keys(selectedDocument.retain_params.metadata).length > 0 && (
+-                            <MetadataRow
+-                              label="Metadata"
++                            <元数据Row
++                              label="元数据"
+                               value={
+-                                <MetadataBadges
++                                <元数据Badges
+                                   metadata={selectedDocument.retain_params.metadata}
+                                 />
+                               }
+@@ -1063,7 +1062,7 @@ export function DocumentsView() {
+                       </InfoCard>
+ 
+                       <InfoCard
+-                        title="Memory Composition"
++                        title="记忆构成"
+                         icon={<Network className="w-3.5 h-3.5" />}
+                       >
+                         <MemoryComposition nodesByFactType={selectedDocument.nodes_by_fact_type} />
+@@ -1078,7 +1077,7 @@ export function DocumentsView() {
+                     <div className="flex items-center justify-center py-20">
+                       <div className="text-center">
+                         <div className="text-4xl mb-2">⏳</div>
+-                        <div className="text-sm text-muted-foreground">Loading chunks...</div>
++                        <div className="text-sm text-muted-foreground">正在加载分块...</div>
+                       </div>
+                     </div>
+                   ) : chunks.length > 0 ? (
+@@ -1092,7 +1091,7 @@ export function DocumentsView() {
+                       <div className="text-center">
+                         <div className="text-4xl mb-2">📄</div>
+                         <div className="text-sm text-muted-foreground">
+-                          No chunks found for this document
++                          此文档未找到分块
+                         </div>
+                       </div>
+                     </div>
+@@ -1100,7 +1099,7 @@ export function DocumentsView() {
+                     <div className="flex items-center justify-center py-20">
+                       <div className="text-center">
+                         <div className="text-sm text-muted-foreground">
+-                          Click the Chunks tab to load chunks
++                          点击“分块”标签以加载分块
+                         </div>
+                       </div>
+                     </div>
+@@ -1112,72 +1111,72 @@ export function DocumentsView() {
+         </DialogContent>
+       </Dialog>
+ 
+-      {/* Delete Confirmation Dialog */}
++      {/* 删除 Confirmation Dialog */}
+       <AlertDialog
+-        open={!!documentToDelete}
+-        onOpenChange={(open) => !open && setDocumentToDelete(null)}
++        open={!!documentTo删除}
++        onOpenChange={(open) => !open && setDocumentTo删除(null)}
+       >
+         <AlertDialogContent>
+           <AlertDialogHeader>
+-            <AlertDialogTitle>Delete Document</AlertDialogTitle>
++            <AlertDialogTitle>删除 Document</AlertDialogTitle>
+             <AlertDialogDescription>
+-              Are you sure you want to delete document{" "}
+-              <span className="font-mono font-semibold">&quot;{documentToDelete?.id}&quot;</span>?
++              确定要删除文档{" "}
++              <span className="font-mono font-semibold">&quot;{documentTo删除?.id}&quot;</span>?
+               <br />
+               <br />
+               This will also delete{" "}
+-              {documentToDelete?.memoryCount !== undefined ? (
+-                <span className="font-semibold">{documentToDelete.memoryCount} memory units</span>
++              {documentTo删除?.memoryCount !== undefined ? (
++                <span className="font-semibold">{documentTo删除.memoryCount} 个记忆单元</span>
+               ) : (
+-                "all memory units"
++                "all 个记忆单元"
+               )}{" "}
+-              extracted from this document.
++              ，这些内容均由该文档提取而来。
+               <br />
+               <br />
+-              <span className="text-destructive font-semibold">This action cannot be undone.</span>
++              <span className="text-destructive font-semibold">此操作无法撤销。</span>
+             </AlertDialogDescription>
+           </AlertDialogHeader>
+           <AlertDialogFooter>
+-            <AlertDialogCancel>Cancel</AlertDialogCancel>
++            <AlertDialogCancel>取消</AlertDialogCancel>
+             <AlertDialogAction
+-              onClick={confirmDeleteDocument}
++              onClick={confirm删除Document}
+               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+             >
+-              Delete
++              删除
+             </AlertDialogAction>
+           </AlertDialogFooter>
+         </AlertDialogContent>
+       </AlertDialog>
+ 
+-      {/* Delete Result Dialog */}
+-      <AlertDialog open={!!deleteResult} onOpenChange={(open) => !open && setDeleteResult(null)}>
++      {/* 删除 Result Dialog */}
++      <AlertDialog open={!!deleteResult} onOpenChange={(open) => !open && set删除Result(null)}>
+         <AlertDialogContent>
+           <AlertDialogHeader>
+             <AlertDialogTitle>
+-              {deleteResult?.success ? "Document Deleted" : "Error"}
++              {deleteResult?.success ? "Document 删除d" : "Error"}
+             </AlertDialogTitle>
+             <AlertDialogDescription>{deleteResult?.message}</AlertDialogDescription>
+           </AlertDialogHeader>
+           <AlertDialogFooter>
+-            <AlertDialogAction onClick={() => setDeleteResult(null)}>OK</AlertDialogAction>
++            <AlertDialogAction onClick={() => set删除Result(null)}>确定</AlertDialogAction>
+           </AlertDialogFooter>
+         </AlertDialogContent>
+       </AlertDialog>
+ 
+-      {/* Reprocess Result Dialog */}
++      {/* 重新处理 Result Dialog */}
+       <AlertDialog
+         open={!!reprocessResult}
+-        onOpenChange={(open) => !open && setReprocessResult(null)}
++        onOpenChange={(open) => !open && set重新处理Result(null)}
+       >
+         <AlertDialogContent>
+           <AlertDialogHeader>
+             <AlertDialogTitle>
+-              {reprocessResult?.success ? "Reprocessing Started" : "Error"}
++              {reprocessResult?.success ? "重新处理ing Started" : "Error"}
+             </AlertDialogTitle>
+             <AlertDialogDescription>{reprocessResult?.message}</AlertDialogDescription>
+           </AlertDialogHeader>
+           <AlertDialogFooter>
+-            <AlertDialogAction onClick={() => setReprocessResult(null)}>OK</AlertDialogAction>
++            <AlertDialogAction onClick={() => set重新处理Result(null)}>确定</AlertDialogAction>
+           </AlertDialogFooter>
+         </AlertDialogContent>
+       </AlertDialog>
+diff --git a/hindsight-control-plane/src/components/entities-view.tsx b/hindsight-control-plane/src/components/entities-view.tsx
+index 0e234e6..69df723 100644
+--- a/hindsight-control-plane/src/components/entities-view.tsx
++++ b/hindsight-control-plane/src/components/entities-view.tsx
+@@ -293,7 +293,7 @@ export function EntitiesView() {
+           ) : entities.length > 0 ? (
+             <>
+               <div className="mb-4 text-sm text-muted-foreground">
+-                {total} {total === 1 ? "实体" : "entities"}
++                {total} {total === 1 ? "实体" : "实体"}
+               </div>
+               <div className="overflow-x-auto">
+                 <Table>
+@@ -317,9 +317,7 @@ export function EntitiesView() {
+                         <TableCell className="font-medium text-card-foreground">
+                           {实体.canonical_name}
+                         </TableCell>
+-                        <TableCell className="text-card-foreground">
+-                          {实体.mention_count}
+-                        </TableCell>
++                        <TableCell className="text-card-foreground">{实体.mention_count}</TableCell>
+                         <TableCell className="text-card-foreground">
+                           {formatDate(实体.first_seen)}
+                         </TableCell>
+diff --git a/hindsight-control-plane/src/components/mental-model-detail-modal.tsx b/hindsight-control-plane/src/components/mental-model-detail-modal.tsx
+index a2cfb9d..4afd12c 100644
+--- a/hindsight-control-plane/src/components/mental-model-detail-modal.tsx
++++ b/hindsight-control-plane/src/components/mental-model-detail-modal.tsx
+@@ -57,7 +57,7 @@ function getFactTypeDisplay(factType: string) {
+   }
+   if (factType === "mental-models") {
+     return {
+-      label: "mental model",
++      label: "心智模型",
+       color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+     };
+   }
+@@ -677,7 +677,7 @@ export function MentalModelDetailModal({
+           }
+           if (attempts >= maxAttempts) {
+             setRefreshing(false);
+-            toast.error("Refresh timeout", {
++            toast.error("刷新超时", {
+               description:
+                 "Refresh is taking longer than expected. Check the operations list for status.",
+             });
+@@ -718,7 +718,7 @@ export function MentalModelDetailModal({
+                   className="h-7 w-7 p-0 shrink-0"
+                   onClick={handleReload}
+                   disabled={reloading}
+-                  title="Reload data"
++                  title="重新加载数据"
+                 >
+                   <RefreshCw className={`h-3.5 w-3.5 ${reloading ? "animate-spin" : ""}`} />
+                 </Button>
+@@ -958,12 +958,12 @@ function ConfigurationTab({ mentalModel }: { mentalModel: MentalModel }) {
+             </code>
+           }
+         />
+-        <Metadata label="Name" value={mentalModel.name} />
++        <Metadata label="名称" value={mentalModel.name} />
+         {mentalModel.source_query && (
+-          <Metadata label="Source Query" value={mentalModel.source_query} />
++          <Metadata label="来源查询" value={mentalModel.source_query} />
+         )}
+         <Metadata
+-          label="Tags"
++          label="标签"
+           value={
+             mentalModel.tags?.length > 0 ? (
+               <div className="flex flex-wrap gap-1.5">
+@@ -983,9 +983,9 @@ function ConfigurationTab({ mentalModel }: { mentalModel: MentalModel }) {
+       </InfoCard>
+ 
+       <InfoCard title="Timing" icon={<RefreshCw className="w-3.5 h-3.5" />}>
+-        <Metadata label="Created" value={formatDateTime(mentalModel.created_at)} />
++        <Metadata label="创建时间" value={formatDateTime(mentalModel.created_at)} />
+         <Metadata
+-          label="Last Refreshed"
++          label="上次刷新"
+           value={
+             <span title={formatDateTime(mentalModel.last_refreshed_at)}>
+               {formatRelativeTime(mentalModel.last_refreshed_at)}
+@@ -997,12 +997,12 @@ function ConfigurationTab({ mentalModel }: { mentalModel: MentalModel }) {
+ 
+       <InfoCard title="Refresh Trigger" icon={<Zap className="w-3.5 h-3.5" />}>
+         <Metadata
+-          label="Refresh mode"
++          label="刷新模式"
+           value={
+             t.mode === "delta" ? (
+-              <Pill label="Delta" color="bg-purple-500/10 text-purple-600 dark:text-purple-400" />
++              <Pill label="增量" color="bg-purple-500/10 text-purple-600 dark:text-purple-400" />
+             ) : (
+-              <Pill label="Full" />
++              <Pill label="全量" />
+             )
+           }
+         />
+@@ -1010,14 +1010,14 @@ function ConfigurationTab({ mentalModel }: { mentalModel: MentalModel }) {
+           label="Auto-refresh after consolidation"
+           value={
+             t.refresh_after_consolidation ? (
+-              <Pill label="Enabled" color="bg-green-500/10 text-green-600 dark:text-green-400" />
++              <Pill label="已启用" color="bg-green-500/10 text-green-600 dark:text-green-400" />
+             ) : (
+-              <Pill label="Disabled" />
++              <Pill label="已禁用" />
+             )
+           }
+         />
+         <Metadata
+-          label="Fact types"
++          label="事实类型"
+           value={
+             factTypes.length > 0 ? (
+               <div className="flex flex-wrap gap-1.5">
+@@ -1031,10 +1031,10 @@ function ConfigurationTab({ mentalModel }: { mentalModel: MentalModel }) {
+             )
+           }
+         />
+-        <Metadata label="Exclude mental models" value={t.exclude_mental_models ? "Yes" : "No"} />
++        <Metadata label="排除心智模型" value={t.exclude_mental_models ? "是" : "否"} />
+         {excludeIds.length > 0 && (
+           <Metadata
+-            label="Excluded IDs"
++            label="排除的 ID"
+             value={
+               <div className="flex flex-wrap gap-1.5">
+                 {excludeIds.map((id) => (
+@@ -1054,23 +1054,23 @@ function ConfigurationTab({ mentalModel }: { mentalModel: MentalModel }) {
+       <InfoCard title="Recall Parameters" icon={<Settings className="w-3.5 h-3.5" />}>
+         <Metadata
+           label="Include chunks"
+-          value={t.include_chunks == null ? "default" : t.include_chunks ? "Yes" : "No"}
++          value={t.include_chunks == null ? "默认" : t.include_chunks ? "是" : "否"}
+         />
+         <Metadata
+-          label="Recall max tokens"
+-          value={t.recall_max_tokens != null ? t.recall_max_tokens.toLocaleString() : "default"}
++          label="回忆最大 token"
++          value={t.recall_max_tokens != null ? t.recall_max_tokens.toLocaleString() : "默认"}
+         />
+         <Metadata
+           label="Recall chunks max tokens"
+           value={
+             t.recall_chunks_max_tokens != null
+               ? t.recall_chunks_max_tokens.toLocaleString()
+-              : "default"
++              : "默认"
+           }
+         />
+         <Metadata
+           label="Tags match"
+-          value={t.tags_match ? <Pill label={t.tags_match} /> : "default"}
++          value={t.tags_match ? <Pill label={t.tags_match} /> : "默认"}
+         />
+       </InfoCard>
+ 
+diff --git a/hindsight-control-plane/src/components/observation-history-view.tsx b/hindsight-control-plane/src/components/observation-history-view.tsx
+index 5d23410..8c22053 100644
+--- a/hindsight-control-plane/src/components/observation-history-view.tsx
++++ b/hindsight-control-plane/src/components/observation-history-view.tsx
+@@ -267,7 +267,7 @@ export function ObservationHistoryView({
+             after={afterOccurredStart}
+           />
+           <DateDiff
+-            label="Occurred end"
++            label="事件结束时间"
+             before={entry.previous_occurred_end}
+             after={afterOccurredEnd}
+           />
+diff --git a/hindsight-control-plane/src/components/search-debug-view.tsx b/hindsight-control-plane/src/components/search-debug-view.tsx
+index 41fe4f6..bb620e6 100644
+--- a/hindsight-control-plane/src/components/search-debug-view.tsx
++++ b/hindsight-control-plane/src/components/search-debug-view.tsx
+@@ -56,7 +56,7 @@ export function SearchDebugView() {
+   const [结果, setResults] = useState<any[] | null>(null);
+   const [entities, setEntities] = useState<any[] | null>(null);
+   const [chunks, setChunks] = useState<any[] | null>(null);
+-  const [observations, setObservations] = useState<any[] | null>(null);
++  const [observations, set观察] = useState<any[] | null>(null);
+   const [追踪, setTrace] = useState<any | null>(null);
+   const [loading, setLoading] = useState(false);
+   const [viewMode, setViewMode] = useState<ViewMode>("结果");
+@@ -100,8 +100,8 @@ export function SearchDebugView() {
+ 
+   const runSearch = async () => {
+     if (!currentBank) {
+-      toast.error("Validation error", {
+-        description: "Please select a memory bank first",
++      toast.error("校验失败", {
++        description: "请先选择一个记忆库",
+       });
+       return;
+     }
+@@ -112,8 +112,8 @@ export function SearchDebugView() {
+ 
+     // Must select at least one type
+     if (factTypes.length === 0) {
+-      toast.error("Validation error", {
+-        description: "Please select at least one type (World, Experience, or Observations)",
++      toast.error("校验失败", {
++        description: "请至少选择一种类型（世界事实、经验事实或观察）",
+       });
+       return;
+     }
+@@ -147,7 +147,7 @@ export function SearchDebugView() {
+       setResults(data.结果 || []);
+       setEntities(data.entities || null);
+       setChunks(data.chunks || null);
+-      setObservations(data.observations || null);
++      set观察(data.observations || null);
+       setTrace(data.追踪 || null);
+       setViewMode("结果");
+     } catch (error) {
+@@ -162,8 +162,8 @@ export function SearchDebugView() {
+       <Card className="border-dashed">
+         <CardContent className="flex flex-col items-center justify-center py-16">
+           <Database className="h-12 w-12 text-muted-foreground mb-4" />
+-          <h3 className="text-xl font-semibold mb-2">No Bank Selected</h3>
+-          <p className="text-muted-foreground">Select a memory bank to start recalling.</p>
++          <h3 className="text-xl font-semibold mb-2">未选择记忆库</h3>
++          <p className="text-muted-foreground">请选择一个记忆库以开始回忆。</p>
+         </CardContent>
+       </Card>
+     );
+@@ -181,19 +181,19 @@ export function SearchDebugView() {
+                 type="text"
+                 value={query}
+                 onChange={(e) => setQuery(e.target.value)}
+-                placeholder="What would you like to recall?"
++                placeholder="你想回忆什么？"
+                 className="pl-10 h-12 text-lg"
+                 onKeyDown={(e) => e.key === "Enter" && runSearch()}
+               />
+             </div>
+             <Button onClick={runSearch} disabled={loading || !query} className="h-12 px-8">
+-              {loading ? "Searching..." : "Recall"}
++              {loading ? "搜索中..." : "回忆"}
+             </Button>
+           </div>
+ 
+           {/* Filters */}
+           <div className="flex flex-wrap items-center gap-6 mt-4 pt-4 border-t">
+-            <FactTypeFilter value={factTypes} onChange={setFactTypes} label="Types:" />
++            <FactTypeFilter value={factTypes} onChange={setFactTypes} label="类型：" />
+ 
+             <div className="h-6 w-px bg-border" />
+ 
+@@ -205,16 +205,16 @@ export function SearchDebugView() {
+                   <SelectValue />
+                 </SelectTrigger>
+                 <SelectContent>
+-                  <SelectItem value="低">Low</SelectItem>
+-                  <SelectItem value="中">Mid</SelectItem>
+-                  <SelectItem value="高">High</SelectItem>
++                  <SelectItem value="低">低</SelectItem>
++                  <SelectItem value="中">中</SelectItem>
++                  <SelectItem value="高">高</SelectItem>
+                 </SelectContent>
+               </Select>
+             </div>
+ 
+             {/* Max Tokens */}
+             <div className="flex items-center gap-2">
+-              <span className="text-sm text-muted-foreground">Tokens:</span>
++              <span className="text-sm text-muted-foreground">令牌数：</span>
+               <Input
+                 type="number"
+                 value={maxTokens}
+@@ -231,7 +231,7 @@ export function SearchDebugView() {
+                 value={queryDate}
+                 onChange={(e) => setQueryDate(e.target.value)}
+                 className="h-8"
+-                placeholder="Query date"
++                placeholder="查询日期"
+               />
+             </div>
+ 
+@@ -245,7 +245,7 @@ export function SearchDebugView() {
+                   onCheckedChange={(c) => setIncludeChunks(c as boolean)}
+                 />
+                 <FileText className="h-4 w-4 text-muted-foreground" />
+-                <span className="text-sm">Chunks</span>
++                <span className="text-sm">分块</span>
+               </label>
+               <label className="flex items-center gap-2 cursor-pointer">
+                 <Checkbox
+@@ -253,7 +253,7 @@ export function SearchDebugView() {
+                   onCheckedChange={(c) => setIncludeEntities(c as boolean)}
+                 />
+                 <Users className="h-4 w-4 text-muted-foreground" />
+-                <span className="text-sm">Entities</span>
++                <span className="text-sm">实体</span>
+               </label>
+             </div>
+           </div>
+@@ -266,7 +266,7 @@ export function SearchDebugView() {
+                 type="text"
+                 value={tags}
+                 onChange={(e) => setTags(e.target.value)}
+-                placeholder="Filter by tags (comma-separated)"
++                placeholder="按标签筛选（逗号分隔）"
+                 className="h-8"
+               />
+             </div>
+@@ -275,10 +275,10 @@ export function SearchDebugView() {
+                 <SelectValue />
+               </SelectTrigger>
+               <SelectContent>
+-                <SelectItem value="any">Any (incl. untagged)</SelectItem>
+-                <SelectItem value="all">All (incl. untagged)</SelectItem>
+-                <SelectItem value="any_strict">Any (strict)</SelectItem>
+-                <SelectItem value="all_strict">All (strict)</SelectItem>
++                <SelectItem value="any">任一（含未打标签）</SelectItem>
++                <SelectItem value="all">全部（含未打标签）</SelectItem>
++                <SelectItem value="any_strict">任一（严格）</SelectItem>
++                <SelectItem value="all_strict">全部（严格）</SelectItem>
+               </SelectContent>
+             </Select>
+           </div>
+@@ -290,7 +290,7 @@ export function SearchDebugView() {
+         <Card>
+           <CardContent className="flex flex-col items-center justify-center py-16">
+             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4" />
+-            <p className="text-muted-foreground">Searching memories...</p>
++            <p className="text-muted-foreground">正在搜索记忆...</p>
+           </CardContent>
+         </Card>
+       )}
+@@ -301,17 +301,17 @@ export function SearchDebugView() {
+           {追踪?.summary && (
+             <div className="flex items-center gap-6 text-sm">
+               <div className="flex items-center gap-2">
+-                <span className="text-muted-foreground">Results:</span>
++                <span className="text-muted-foreground">结果数：</span>
+                 <span className="font-semibold">{结果.length}</span>
+               </div>
+               <div className="flex items-center gap-2">
+-                <span className="text-muted-foreground">Duration:</span>
++                <span className="text-muted-foreground">耗时：</span>
+                 <span className="font-semibold">
+                   {追踪.summary.total_duration_seconds?.toFixed(2)}s
+                 </span>
+               </div>
+               <div className="flex items-center gap-2">
+-                <span className="text-muted-foreground">Nodes visited:</span>
++                <span className="text-muted-foreground">访问节点数：</span>
+                 <span className="font-semibold">{追踪.summary.total_nodes_visited}</span>
+               </div>
+ 
+@@ -329,7 +329,7 @@ export function SearchDebugView() {
+                         : "text-muted-foreground hover:text-foreground"
+                     }`}
+                   >
+-                    {mode === "结果" ? "Results" : mode === "追踪" ? "Trace" : "JSON"}
++                    {mode === "结果" ? "结果" : mode === "追踪" ? "追踪" : "JSON"}
+                   </button>
+                 ))}
+               </div>
+@@ -339,13 +339,13 @@ export function SearchDebugView() {
+           {/* Results View */}
+           {viewMode === "结果" && (
+             <div className="space-y-4">
+-              {/* Observations Section */}
++              {/* 观察 Section */}
+               {observations && observations.length > 0 && (
+                 <Card className="border-orange-500/30 bg-orange-500/5">
+                   <CardHeader className="py-3">
+                     <CardTitle className="text-base flex items-center gap-2">
+                       <Database className="h-4 w-4 text-orange-500" />
+-                      <span>Observations</span>
++                      <span>观察</span>
+                       <span className="text-xs text-muted-foreground">({observations.length})</span>
+                     </CardTitle>
+                   </CardHeader>
+@@ -358,10 +358,10 @@ export function SearchDebugView() {
+                         <p className="text-sm text-foreground">{obs.text}</p>
+                         <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+                           <span className="px-2 py-0.5 rounded bg-orange-500/10 text-orange-600">
+-                            Observation
++                            观察
+                           </span>
+-                          <span>Proof count: {obs.proof_count || 1}</span>
+-                          <span>Relevance: {(obs.relevance || 0).toFixed(3)}</span>
++                          <span>证据数： {obs.proof_count || 1}</span>
++                          <span>相关度： {(obs.relevance || 0).toFixed(3)}</span>
+                         </div>
+                       </div>
+                     ))}
+@@ -375,13 +375,13 @@ export function SearchDebugView() {
+                   <Card>
+                     <CardContent className="flex flex-col items-center justify-center py-12">
+                       <Search className="h-12 w-12 text-muted-foreground mb-4" />
+-                      <p className="text-muted-foreground">No memories found for this query.</p>
++                      <p className="text-muted-foreground">未找到与该查询相关的记忆。</p>
+                     </CardContent>
+                   </Card>
+                 ) : (
+                   结果.map((result: any, idx: number) => {
+                     const visit = 追踪?.visits?.find((v: any) => v.node_id === result.id);
+-                    const score = visit ? visit.weights.final_weight : result.score || 0;
++                    const 分数 = visit ? visit.weights.final_weight : result.分数 || 0;
+ 
+                     return (
+                       <Card
+@@ -411,8 +411,8 @@ export function SearchDebugView() {
+                               </div>
+                             </div>
+                             <div className="flex-shrink-0 text-right">
+-                              <div className="text-sm font-semibold">{(score ?? 0).toFixed(3)}</div>
+-                              <div className="text-xs text-muted-foreground">score</div>
++                              <div className="text-sm font-semibold">{(分数 ?? 0).toFixed(3)}</div>
++                              <div className="text-xs text-muted-foreground">分数</div>
+                             </div>
+                             <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                           </div>
+@@ -445,22 +445,22 @@ export function SearchDebugView() {
+                     <div>
+                       <div className="text-xs font-medium text-muted-foreground mb-3 flex items-center gap-2">
+                         <div className="flex-1 h-px bg-border" />
+-                        <span>PARALLEL RETRIEVAL</span>
++                        <span>并行检索</span>
+                         <div className="flex-1 h-px bg-border" />
+                       </div>
+ 
+                       {/* Fact type lanes */}
+                       <div className="space-y-2">
+                         {factTypes.map((factType, ftIdx) => {
+-                          const methods = factTypeGroups[factType];
+-                          const laneKey = `lane-${factType}`;
++                          const 种方法 = factTypeGroups[factType];
++                          const laneKey = `lane-${factType === "world" ? "世界事实" : factType === "experience" ? "经验事实" : factType === "opinion" ? "观点" : "全部"}`;
+                           const isLaneExpanded = expandedSteps.has(laneKey);
+-                          const totalResults = methods.reduce(
++                          const totalResults = 种方法.reduce(
+                             (sum: number, m: any) => sum + (m.结果?.length || 0),
+                             0
+                           );
+                           const totalDuration = Math.max(
+-                            ...methods.map((m: any) => m.duration_seconds || 0)
++                            ...种方法.map((m: any) => m.duration_seconds || 0)
+                           );
+ 
+                           // Color coding for fact types
+@@ -512,15 +512,15 @@ export function SearchDebugView() {
+                                   <div className="flex-1">
+                                     <div className="flex items-center gap-2">
+                                       <span className="font-semibold text-foreground capitalize">
+-                                        {factType}
++                                        {factType === "world" ? "世界事实" : factType === "experience" ? "经验事实" : factType === "opinion" ? "观点" : "全部"}
+                                       </span>
+                                       <span className="text-xs text-muted-foreground">
+-                                        {methods.length} methods
++                                        {种方法.length} 种方法
+                                       </span>
+                                     </div>
+                                     {/* Method summary pills */}
+                                     <div className="flex gap-1.5 mt-1">
+-                                      {methods.map((m: any, mIdx: number) => (
++                                      {种方法.map((m: any, mIdx: number) => (
+                                         <span
+                                           key={mIdx}
+                                           className="text-[10px] px-2 py-0.5 rounded-full bg-muted text-muted-foreground capitalize"
+@@ -545,21 +545,21 @@ export function SearchDebugView() {
+                                   )}
+                                 </div>
+ 
+-                                {/* Expanded: Show methods grid */}
++                                {/* Expanded: Show 种方法 grid */}
+                                 {isLaneExpanded && (
+                                   <div className="mt-4 pt-4 border-t border-border">
+                                     <div
+                                       className={`grid gap-3 ${
+-                                        methods.length === 1
++                                        种方法.length === 1
+                                           ? "grid-cols-1"
+-                                          : methods.length === 2
++                                          : 种方法.length === 2
+                                             ? "grid-cols-2"
+-                                            : methods.length === 3
++                                            : 种方法.length === 3
+                                               ? "grid-cols-3"
+                                               : "grid-cols-4"
+                                       }`}
+                                     >
+-                                      {methods.map((method: any, mIdx: number) => {
++                                      {种方法.map((method: any, mIdx: number) => {
+                                         const methodKey = `${laneKey}-method-${mIdx}`;
+                                         const isMethodExpanded = expandedSteps.has(methodKey);
+                                         const methodResults = method.结果 || [];
+@@ -591,13 +591,13 @@ export function SearchDebugView() {
+                                                           ? new Date(
+                                                               method.metadata.constraint.start
+                                                             ).toLocaleDateString()
+-                                                          : "any"}
++                                                          : "不限"}
+                                                         {" → "}
+                                                         {method.metadata.constraint.end
+                                                           ? new Date(
+                                                               method.metadata.constraint.end
+                                                             ).toLocaleDateString()
+-                                                          : "any"}
++                                                          : "不限"}
+                                                       </span>
+                                                     )}
+                                                 </div>
+@@ -651,7 +651,7 @@ export function SearchDebugView() {
+                                                             <div className="flex items-center gap-2 mt-1">
+                                                               <span className="text-[10px] text-muted-foreground">
+                                                                 {(
+-                                                                  r.score ||
++                                                                  r.分数 ||
+                                                                   r.similarity ||
+                                                                   0
+                                                                 ).toFixed(4)}
+@@ -670,8 +670,8 @@ export function SearchDebugView() {
+                                                         }}
+                                                       >
+                                                         {showAll
+-                                                          ? `Show less`
+-                                                          : `View all ${methodResults.length} 结果`}
++                                                          ? `收起`
++                                                          : `查看全部 ${methodResults.length} 条结果`}
+                                                       </button>
+                                                     )}
+                                                   </div>
+@@ -717,9 +717,9 @@ export function SearchDebugView() {
+                 })()}
+ 
+               {/* Step 2: RRF Merge */}
+-              {追踪.rrf_merged &&
++              {追踪.rrf_合并d &&
+                 (() => {
+-                  const stepKey = "rrf-merge";
++                  const stepKey = "rrf-合并";
+                   const isExpanded = expandedSteps.has(stepKey);
+ 
+                   return (
+@@ -735,17 +735,17 @@ export function SearchDebugView() {
+                             </div>
+                             <div className="flex-1">
+                               <div className="flex items-center gap-2">
+-                                <span className="font-semibold text-foreground">RRF Fusion</span>
++                                <span className="font-semibold text-foreground">RRF 融合</span>
+                                 <span className="text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground">
+-                                  merge
++                                  合并
+                                 </span>
+                               </div>
+                               <div className="text-sm text-muted-foreground mt-0.5">
+-                                Reciprocal Rank Fusion of all retrieval 结果
++                                对所有检索结果进行倒数排序融合
+                               </div>
+                             </div>
+                             <div className="text-2xl font-bold text-foreground">
+-                              {追踪.rrf_merged.length}
++                              {追踪.rrf_合并d.length}
+                             </div>
+                             {isExpanded ? (
+                               <ChevronDown className="h-5 w-5 text-muted-foreground" />
+@@ -758,14 +758,14 @@ export function SearchDebugView() {
+ 
+                       {/* Expanded Results */}
+                       {isExpanded &&
+-                        追踪.rrf_merged.length > 0 &&
++                        追踪.rrf_合并d.length > 0 &&
+                         (() => {
+                           const 结果Key = "结果-rrf";
+                           const showAll = expandedResults.has(结果Key);
+                           const displayResults = showAll
+-                            ? 追踪.rrf_merged
+-                            : 追踪.rrf_merged.slice(0, INITIAL_RESULTS_COUNT);
+-                          const hasMore = 追踪.rrf_merged.length > INITIAL_RESULTS_COUNT;
++                            ? 追踪.rrf_合并d
++                            : 追踪.rrf_合并d.slice(0, INITIAL_RESULTS_COUNT);
++                          const hasMore = 追踪.rrf_合并d.length > INITIAL_RESULTS_COUNT;
+ 
+                           return (
+                             <div className="ml-6 mt-2 space-y-2 border-l-2 border-muted pl-4 max-h-[400px] overf低-y-auto">
+@@ -787,7 +787,7 @@ export function SearchDebugView() {
+                                         {r.text}
+                                       </p>
+                                       <div className="text-xs text-muted-foreground mt-1">
+-                                        RRF Score: {(r.rrf_score || r.score || 0).toFixed(4)}
++                                        RRF 分数： {(r.rrf_分数 || r.分数 || 0).toFixed(4)}
+                                       </div>
+                                     </div>
+                                   </div>
+@@ -802,8 +802,8 @@ export function SearchDebugView() {
+                                   }}
+                                 >
+                                   {showAll
+-                                    ? `Show less`
+-                                    : `View all ${追踪.rrf_merged.length} 结果`}
++                                    ? `收起`
++                                    : `View all ${追踪.rrf_合并d.length} 结果`}
+                                 </button>
+                               )}
+                             </div>
+@@ -818,10 +818,10 @@ export function SearchDebugView() {
+                   );
+                 })()}
+ 
+-              {/* Step 3: Combined Scoring */}
+-              {追踪.reranked &&
++              {/* Step 3: 综合评分 */}
++              {追踪.重排ed &&
+                 (() => {
+-                  const stepKey = "reranking";
++                  const stepKey = "重排ing";
+                   const isExpanded = expandedSteps.has(stepKey);
+ 
+                   return (
+@@ -838,10 +838,10 @@ export function SearchDebugView() {
+                             <div className="flex-1">
+                               <div className="flex items-center gap-2">
+                                 <span className="font-semibold text-foreground">
+-                                  Combined Scoring
++                                  综合评分
+                                 </span>
+                                 <span className="text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground">
+-                                  rerank
++                                  重排
+                                 </span>
+                               </div>
+                               <div className="text-sm text-muted-foreground mt-0.5">
+@@ -851,7 +851,7 @@ export function SearchDebugView() {
+                               </div>
+                             </div>
+                             <div className="text-2xl font-bold text-foreground">
+-                              {追踪.reranked.length}
++                              {追踪.重排ed.length}
+                             </div>
+                             {isExpanded ? (
+                               <ChevronDown className="h-5 w-5 text-muted-foreground" />
+@@ -864,19 +864,19 @@ export function SearchDebugView() {
+ 
+                       {/* Expanded Results */}
+                       {isExpanded &&
+-                        追踪.reranked.length > 0 &&
++                        追踪.重排ed.length > 0 &&
+                         (() => {
+-                          const 结果Key = "结果-rerank";
++                          const 结果Key = "结果-重排";
+                           const showAll = expandedResults.has(结果Key);
+                           const displayResults = showAll
+-                            ? 追踪.reranked
+-                            : 追踪.reranked.slice(0, INITIAL_RESULTS_COUNT);
+-                          const hasMore = 追踪.reranked.length > INITIAL_RESULTS_COUNT;
++                            ? 追踪.重排ed
++                            : 追踪.重排ed.slice(0, INITIAL_RESULTS_COUNT);
++                          const hasMore = 追踪.重排ed.length > INITIAL_RESULTS_COUNT;
+ 
+                           return (
+                             <div className="ml-6 mt-2 space-y-2 border-l-2 border-muted pl-4 max-h-[400px] overf低-y-auto">
+                               {displayResults.map((r: any, rIdx: number) => {
+-                                const sc = r.score_components || {};
++                                const sc = r.分数_components || {};
+                                 return (
+                                   <div
+                                     key={rIdx}
+@@ -896,20 +896,20 @@ export function SearchDebugView() {
+                                         </p>
+                                         <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-[10px] text-muted-foreground font-mono">
+                                           <span className="font-semibold text-foreground">
+-                                            = {(r.rerank_score || r.score || 0).toFixed(4)}
++                                            = {(r.重排_分数 || r.分数 || 0).toFixed(4)}
+                                           </span>
+-                                          {sc.cross_encoder_score_normalized !== undefined && (
+-                                            <span title="Cross-encoder score (primary relevance signal)">
+-                                              CE: {sc.cross_encoder_score_normalized.toFixed(3)}
++                                          {sc.cross_encoder_分数_normalized !== undefined && (
++                                            <span title="Cross-encoder 分数 (primary relevance signal)">
++                                              CE: {sc.cross_encoder_分数_normalized.toFixed(3)}
+                                             </span>
+                                           )}
+                                           {sc.temporal !== undefined && sc.temporal !== 0.5 && (
+-                                            <span title="Temporal proximity boost (±10% — only active for temporal queries)">
++                                            <span title="时间邻近加成（±10%，仅对时间查询生效）">
+                                               Tmp: {sc.temporal.toFixed(3)}
+                                             </span>
+                                           )}
+                                           {sc.recency !== undefined && (
+-                                            <span title="Recency boost (±10% — based on memory age)">
++                                            <span title="新近度加成（±10%，基于记忆新旧程度）">
+                                               Rec: {sc.recency.toFixed(3)}
+                                             </span>
+                                           )}
+@@ -927,9 +927,7 @@ export function SearchDebugView() {
+                                     toggleExpandResults(结果Key);
+                                   }}
+                                 >
+-                                  {showAll
+-                                    ? `Show less`
+-                                    : `View all ${追踪.reranked.length} 结果`}
++                                  {showAll ? `收起` : `View all ${追踪.重排ed.length} 结果`}
+                                 </button>
+                               )}
+                             </div>
+@@ -953,13 +951,13 @@ export function SearchDebugView() {
+                     </div>
+                     <div className="flex-1">
+                       <div className="flex items-center gap-2">
+-                        <span className="font-semibold text-foreground">Final Results</span>
++                        <span className="font-semibold text-foreground">最终结果</span>
+                         <span className="text-xs px-2 py-0.5 rounded bg-primary/20 text-primary">
+-                          output
++                          输出
+                         </span>
+                       </div>
+                       <div className="text-sm text-muted-foreground mt-0.5">
+-                        Top 结果 after all processing steps
++                        经过所有处理步骤后的最终结果
+                       </div>
+                     </div>
+                     <div className="text-2xl font-bold text-primary">{结果?.length || 0}</div>
+@@ -973,7 +971,7 @@ export function SearchDebugView() {
+           {viewMode === "JSON" && (
+             <Card>
+               <CardHeader>
+-                <CardTitle className="text-lg">Raw Response</CardTitle>
++                <CardTitle className="text-lg">原始响应</CardTitle>
+               </CardHeader>
+               <CardContent>
+                 <div className="bg-muted p-4 rounded-lg overf低-auto max-h-[600px]">
+@@ -1000,10 +998,9 @@ export function SearchDebugView() {
+         <Card className="border-dashed">
+           <CardContent className="flex flex-col items-center justify-center py-16">
+             <Search className="h-12 w-12 text-muted-foreground mb-4" />
+-            <h3 className="text-lg font-semibold mb-2">Ready to Recall</h3>
++            <h3 className="text-lg font-semibold mb-2">Ready to 回忆</h3>
+             <p className="text-muted-foreground text-center max-w-md">
+-              Enter a query above to search through your memories. Use filters to narrow down by
+-              fact type, budget, and more.
++              在上方输入查询以搜索你的记忆。可使用筛选条件按事实类型、预算等进一步缩小范围。
+             </p>
+           </CardContent>
+         </Card>
+diff --git a/hindsight-control-plane/src/components/think-view.tsx b/hindsight-control-plane/src/components/think-view.tsx
+index 0e31598..d1bd4ef 100644
+--- a/hindsight-control-plane/src/components/think-view.tsx
++++ b/hindsight-control-plane/src/components/think-view.tsx
+@@ -204,13 +204,13 @@ export function ThinkView() {
+                 type="text"
+                 value={query}
+                 onChange={(e) => setQuery(e.target.value)}
+-                placeholder="What would you like to reflect on?"
++                placeholder="你想围绕什么进行反思？"
+                 className="pl-10 h-12 text-lg"
+                 onKeyDown={(e) => e.key === "Enter" && runReflect()}
+               />
+             </div>
+             <Button onClick={runReflect} disabled={loading || !query} className="h-12 px-8">
+-              {loading ? "Reflecting..." : "Reflect"}
++              {loading ? "反思中..." : "开始反思"}
+             </Button>
+           </div>
+ 
+@@ -271,7 +271,7 @@ export function ThinkView() {
+                 type="text"
+                 value={tags}
+                 onChange={(e) => setTags(e.target.value)}
+-                placeholder="Filter by tags (comma-separated)"
++                placeholder="按标签筛选（逗号分隔）"
+                 className="h-8"
+               />
+             </div>
+@@ -305,7 +305,7 @@ export function ThinkView() {
+                 type="text"
+                 value={excludeMentalModelIds}
+                 onChange={(e) => setExcludeMentalModelIds(e.target.value)}
+-                placeholder="model-a, model-b"
++                placeholder="模型A，模型B"
+                 className="h-8 w-48"
+               />
+             </div>
+@@ -350,10 +350,7 @@ export function ThinkView() {
+                 <span className="font-semibold">{result.追踪.tool_calls.length}</span>
+                 <span className="text-muted-foreground">
+                   (
+-                  {result.追踪.tool_calls.reduce(
+-                    (sum: number, tc: any) => sum + tc.duration_ms,
+-                    0
+-                  )}
++                  {result.追踪.tool_calls.reduce((sum: number, tc: any) => sum + tc.duration_ms, 0)}
+                   ms)
+                 </span>
+               </div>
+@@ -363,8 +360,7 @@ export function ThinkView() {
+                 <span className="text-muted-foreground">LLM calls:</span>
+                 <span className="font-semibold">{result.追踪.llm_calls.length}</span>
+                 <span className="text-muted-foreground">
+-                  (
+-                  {result.追踪.llm_calls.reduce((sum: number, lc: any) => sum + lc.duration_ms, 0)}
++                  ({result.追踪.llm_calls.reduce((sum: number, lc: any) => sum + lc.duration_ms, 0)}
+                   ms)
+                 </span>
+               </div>
+@@ -442,7 +438,7 @@ export function ThinkView() {
+                         disabled={feedbackSubmitting || !feedback.trim()}
+                         className="self-end"
+                       >
+-                        {feedbackSubmitting ? "Saving..." : "Save"}
++                        {feedbackSubmitting ? "保存中..." : "保存"}
+                       </Button>
+                     </div>
+                   )}
+@@ -515,7 +511,7 @@ export function ThinkView() {
+                         <div>
+                           <p className="font-medium text-sm text-foreground">Not included</p>
+                           <p className="text-xs text-muted-foreground mt-0.5">
+-                            Enable "Include Tool Calls" to see 追踪.
++                            启用“包含工具调用”以查看追踪。
+                           </p>
+                         </div>
+                       </div>
+@@ -595,7 +591,7 @@ export function ThinkView() {
+                                   <div className="flex-1 min-w-0">
+                                     <div className="flex items-center justify-between">
+                                       <span className="font-medium text-sm">
+-                                        {item.isFinal ? "Response generated" : "Agent decided"}
++                                        {item.isFinal ? "已生成回复" : "代理已决策"}
+                                       </span>
+                                       <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                         <Clock className="w-3 h-3" />
+@@ -603,7 +599,7 @@ export function ThinkView() {
+                                       </span>
+                                     </div>
+                                     <span className="text-xs text-muted-foreground">
+-                                      {item.isFinal ? "Final 回答" : "Called tools be低"}
++                                      {item.isFinal ? "最终回答" : "已调用工具"}
+                                     </span>
+                                   </div>
+                                 </div>
+@@ -689,9 +685,8 @@ export function ThinkView() {
+                     <CardTitle className="text-base">Based On</CardTitle>
+                     <CardDescription className="text-xs">
+                       {(result.based_on?.memories?.length || 0) +
+-                        (result.based_on?.观察?.filter(
+-                          (o: any) => o.subtype !== "directive"
+-                        )?.length || 0) +
++                        (result.based_on?.观察?.filter((o: any) => o.subtype !== "directive")
++                          ?.length || 0) +
+                         (result.based_on?.指令?.length || 0)}{" "}
+                       items used
+                     </CardDescription>
+@@ -703,13 +698,12 @@ export function ThinkView() {
+                         <div>
+                           <p className="font-medium text-sm text-foreground">Not included</p>
+                           <p className="text-xs text-muted-foreground mt-0.5">
+-                            Enable "Include Source" to see memories.
++                            启用“包含来源”以查看记忆。
+                           </p>
+                         </div>
+                       </div>
+                     ) : (result.based_on?.memories && result.based_on.memories.length > 0) ||
+-                      (result.based_on?.心智模型 &&
+-                        result.based_on.心智模型.length > 0) ||
++                      (result.based_on?.心智模型 && result.based_on.心智模型.length > 0) ||
+                       (result.based_on?.指令 && result.based_on.指令.length > 0) ||
+                       (result.based_on?.观察 && result.based_on.观察.length > 0) ? (
+                       (() => {
+@@ -728,10 +722,10 @@ export function ThinkView() {
+ 
+                         // Build tabs array with all categories
+                         const tabs: { id: BasedOnTab; label: string; count: number }[] = [
+-                          { id: "指令", label: "Directives", count: 指令.length },
++                          { id: "指令", label: "指令", count: 指令.length },
+                           {
+                             id: "心智模型",
+-                            label: "Mental Models",
++                            label: "心智模型",
+                             count: mentalModelFacts.length,
+                           },
+                           { id: "观察", label: "Observations", count: 观察.length },
+@@ -792,8 +786,7 @@ export function ThinkView() {
+                                     }`}
+                                     onClick={() => {
+                                       if (currentTab === "指令") return; // Not clickable
+-                                      if (currentTab === "观察")
+-                                        handleSelectObservation(item);
++                                      if (currentTab === "观察") handleSelectObservation(item);
+                                       else if (currentTab === "心智模型")
+                                         setSelectedMentalModelId(item.id);
+                                       else setSelectedMemoryId(item.id);
