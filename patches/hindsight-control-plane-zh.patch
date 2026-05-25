@@ -11671,3 +11671,97 @@ index a60967d..c6caf6e 100644
                    </Button>
                  </div>
                )}
+diff --git a/hindsight-control-plane/src/app/api/recall/route.ts b/hindsight-control-plane/src/app/api/recall/route.ts
+index ce6ec1b..2560e0a 100644
+--- a/hindsight-control-plane/src/app/api/recall/route.ts
++++ b/hindsight-control-plane/src/app/api/recall/route.ts
+@@ -34,9 +34,32 @@ export async function POST(request: NextRequest) {
+       },
+     });
+ 
++    if (response.error) {
++      console.error("[Recall API] Upstream error", response.error);
++      const errorBody = response.error as any;
++      const status =
++        errorBody?.status ||
++        errorBody?.response?.status ||
++        errorBody?.statusCode ||
++        500;
++      const detail =
++        errorBody?.detail ||
++        errorBody?.message ||
++        errorBody?.response?.data ||
++        errorBody ||
++        "Unknown error";
++      return NextResponse.json(
++        {
++          error: "Failed to recall",
++          details: detail,
++        },
++        { status }
++      );
++    }
++
+     if (!response.data) {
+-      console.error("[Recall API] No data in response", { response, error: response.error });
+-      throw new Error(`API returned no data: ${JSON.stringify(response.error || "Unknown error")}`);
++      console.error("[Recall API] No data in response", { response });
++      throw new Error("API returned no data");
+     }
+ 
+     // Return a clean JSON object by spreading the response
+diff --git a/hindsight-control-plane/src/components/graph-2d.tsx b/hindsight-control-plane/src/components/graph-2d.tsx
+index 93bab0d..41cf738 100644
+--- a/hindsight-control-plane/src/components/graph-2d.tsx
++++ b/hindsight-control-plane/src/components/graph-2d.tsx
+@@ -594,7 +594,7 @@ export function Graph2D({
+         <div className="absolute inset-0 flex items-center justify-center bg-background z-10">
+           <div className="text-center">
+             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4" />
+-            <p className="text-sm text-muted-foreground">Loading graph...</p>
++            <p className="text-sm text-muted-foreground">正在加载图谱...</p>
+           </div>
+         </div>
+       )}
+@@ -618,7 +618,7 @@ export function Graph2D({
+       {!isLoading && graphData.nodes.length === 0 && (
+         <div className="absolute inset-0 flex items-center justify-center">
+           <div className="text-center">
+-            <p className="text-muted-foreground">No memories to display</p>
++            <p className="text-muted-foreground">暂无可显示的记忆</p>
+           </div>
+         </div>
+       )}
+@@ -644,19 +644,19 @@ export function Graph2D({
+               {(() => {
+                 const type = hoveredLink.type || "semantic";
+                 if (["causes", "caused_by", "enables", "prevents"].includes(type)) {
+-                  return `Causal (${type.replace("_", " ")})`;
++                  return `因果关系（${type.replace("_", " ")}）`;
+                 }
+-                return `${type} link`;
++                return `${type} 连接`;
+               })()}
+             </div>
+             {hoveredLink.entity && (
+               <div className="text-xs opacity-80">
+-                Entity: <span className="font-medium">{hoveredLink.entity}</span>
++                实体：<span className="font-medium">{hoveredLink.entity}</span>
+               </div>
+             )}
+             {hoveredLink.weight !== undefined && (
+               <div className="text-xs opacity-80">
+-                Weight: <span className="font-medium">{hoveredLink.weight.toFixed(3)}</span>
++                权重：<span className="font-medium">{hoveredLink.weight.toFixed(3)}</span>
+               </div>
+             )}
+           </div>
+@@ -665,7 +665,7 @@ export function Graph2D({
+ 
+       {/* Controls hint */}
+       <div className="absolute bottom-4 right-4 text-xs text-muted-foreground/60 z-20">
+-        Drag to pan • Scroll to zoom • Double-click node to focus • Click background to reset
++        拖拽可平移 • 滚轮可缩放 • 双击节点可聚焦 • 点击背景可重置
+       </div>
+     </div>
+   );

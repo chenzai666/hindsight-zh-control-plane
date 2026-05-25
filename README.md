@@ -13,6 +13,7 @@ Hindsight 中文 control-plane 可复用部署层。
 - 应用中文汉化 patch
 - 重新构建 `hindsight-control-plane`
 - 将中文 `standalone` 覆盖进最终镜像 `/app/control-plane`
+- 一并包含 recall API 错误透传修复与 Graph 2D 图谱页补翻译
 
 产出镜像：
 
