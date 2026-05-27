@@ -28,4 +28,5 @@ LABEL org.opencontainers.image.title="Hindsight ZH Control Plane" \
       org.opencontainers.image.version="${HINDSIGHT_VERSION}" \
       org.opencontainers.image.source="https://github.com/chenzai666/hindsight-zh-control-plane"
 
+RUN rm -rf /app/control-plane
 COPY --from=builder /build/source/hindsight-control-plane/standalone /app/control-plane
