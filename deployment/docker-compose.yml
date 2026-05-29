@@ -3,6 +3,7 @@ services:
     image: pgvector/pgvector:pg18
     container_name: hindsight-postgres
     restart: unless-stopped
+    shm_size: "512mb"
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -31,6 +32,7 @@ services:
       HINDSIGHT_API_LLM_PROVIDER: ${HINDSIGHT_API_LLM_PROVIDER}
       HINDSIGHT_API_LLM_BASE_URL: ${HINDSIGHT_API_LLM_BASE_URL}
       HINDSIGHT_API_LLM_API_KEY: ${HINDSIGHT_API_LLM_API_KEY}
+      HINDSIGHT_API_LLM_MODEL: ${HINDSIGHT_API_LLM_MODEL}
       HINDSIGHT_API_LOG_LEVEL: ${HINDSIGHT_API_LOG_LEVEL}
       NODE_ENV: production
       PYTHONUNBUFFERED: "1"
@@ -44,6 +46,7 @@ services:
 networks:
   hindsight-net:
     name: hindsight-net
+    external: true
 
 volumes:
   hindsight_postgres_data:
