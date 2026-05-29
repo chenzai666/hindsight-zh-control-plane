@@ -16,6 +16,9 @@ cd deployment
 cp .env.example .env
 # edit .env with your real secrets
 
+# create the external Docker network once if it does not exist
+docker network create hindsight-net 2>/dev/null || true
+
 docker compose up -d
 ```
 
@@ -23,10 +26,22 @@ docker compose up -d
 
 - Hindsight image: `chenzai666/hindsight-zh-control-plane:latest`
 - PostgreSQL image: `pgvector/pgvector:pg18`
-- Network: `hindsight-net`
+- Network: existing external network `hindsight-net`
 - Ports:
   - `8888` for API
   - `9999` for control-plane
+
+## Required environment variables
+
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+- `POSTGRES_DB`
+- `HINDSIGHT_API_LLM_PROVIDER`
+- `HINDSIGHT_API_LLM_BASE_URL`
+- `HINDSIGHT_API_LLM_API_KEY`
+- `HINDSIGHT_API_LLM_MODEL`
+
+`docker-compose.yml` builds `HINDSIGHT_API_DATABASE_URL` from `${POSTGRES_USER}`, `${POSTGRES_PASSWORD}`, and `${POSTGRES_DB}`. Do not replace it with a literal masked password such as `***`.
 
 ## Post-deploy verification
 

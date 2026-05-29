@@ -1,14 +1,1 @@
-# build artifacts
-build/
-.tmp/
-
-# local test output
-*.log
-
-# OS / editor
-.DS_Store
-.vscode/
-.idea/
-
-# copied runtime bundle if generated locally
-standalone/
+deployment/.env
