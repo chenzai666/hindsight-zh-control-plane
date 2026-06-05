@@ -28,5 +28,15 @@ LABEL org.opencontainers.image.title="Hindsight ZH Control Plane" \
       org.opencontainers.image.version="${HINDSIGHT_VERSION}" \
       org.opencontainers.image.source="https://github.com/chenzai666/hindsight-zh-control-plane"
 
+USER root
 RUN rm -rf /app/control-plane
 COPY --from=builder /build/source/hindsight-control-plane/standalone /app/control-plane
+
+COPY scripts/seed-zh-mental-models.py /app/zh-seed/seed-zh-mental-models.py
+COPY scripts/start-all-zh.sh /app/start-all-zh.sh
+RUN mv /app/start-all.sh /app/start-all.upstream.sh \
+    && chmod +x /app/start-all-zh.sh /app/start-all.upstream.sh /app/zh-seed/seed-zh-mental-models.py \
+    && chown -R hindsight:hindsight /app/control-plane /app/zh-seed /app/start-all-zh.sh /app/start-all.upstream.sh
+USER hindsight
+
+CMD ["/app/start-all-zh.sh"]
